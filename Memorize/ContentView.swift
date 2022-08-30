@@ -23,7 +23,6 @@ func widthThatBestFits(cardCount: Int) -> CGFloat{
 struct ContentView: View {
     @State var emojis = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
     @State var emojiCount = Int.random(in: 4...13)
-    @State var bottonSelected = 1
     
     var body: some View {
         VStack{
@@ -39,71 +38,8 @@ struct ContentView: View {
                 }
             }
             .foregroundColor(.orange)
-            Spacer()
-            HStack{
-                Spacer()
-                car
-                Spacer()
-                animal
-                Spacer()
-                food
-                Spacer()
-            }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
         .padding(.horizontal)
-    }
-    
-    var car: some View{
-        Button {
-            emojis = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
-            bottonSelected = 1
-            emojis.shuffle()
-            emojiCount = Int.random(in: 4...emojis.count)
-        } label: {
-            VStack{
-                Image(systemName: "car")
-                Text("Cars")
-                    .font(.subheadline)
-            }
-            .foregroundColor(bottonSelected == 1 ? .blue: .gray)
-            
-        }
-    }
-    
-    var animal: some View{
-        Button{
-            emojis = ["🐵", "🐼", "🐙", "🐔", "🦅", "🐢", "🐷", "🐟", "🦐", "🐳", "🦒", "🐝", "🐊"]
-            bottonSelected = 2
-            emojis.shuffle()
-            emojiCount = Int.random(in: 4...emojis.count)
-        } label: {
-            VStack{
-                Image(systemName: "pawprint")
-                Text("Animals")
-                    .font(.subheadline)
-            }
-            .foregroundColor(bottonSelected == 2 ? .blue: .gray)
-            
-        }
-    }
-    
-    var food: some View{
-        Button{
-            emojis = ["🍔", "🍕", "🌭", "🌮", "🌶", "🌯", "🥟", "🍙", "🍚", "🍝", "🥖", "🍤"]
-            bottonSelected = 3
-            emojis.shuffle()
-            emojiCount = Int.random(in: 4...emojis.count)
-        } label: {
-            VStack{
-                Image(systemName: "takeoutbag.and.cup.and.straw")
-                Text("Foods")
-                    .font(.subheadline)
-            }
-            .foregroundColor(bottonSelected == 3 ? .blue: .gray)
-            
-        }
     }
 }
 
