@@ -7,14 +7,32 @@
 
 import SwiftUI
 
+func widthThatBestFits(cardCount: Int) -> CGFloat{
+    switch cardCount{
+    case 4:
+        return 130
+    case 5...9:
+        return 90
+    case 10...13:
+        return 80
+    default:
+        return 80
+    
+    }
+}
+
 struct ContentView: View {
-    var emojis = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
-    @State var emojiCount = 4
+    @State var emojis = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
+    @State var emojiCount = Int.random(in: 4...13)
+    @State var bottonSelected = 1
     
     var body: some View {
         VStack{
+            Text("Memorize!")
+                .font(.largeTitle)
+                .padding()
             ScrollView{
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]){
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(cardCount: emojiCount)))]){
                     ForEach(emojis[0..<emojiCount],id: \.self) {emoji in
                         CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
@@ -24,9 +42,13 @@ struct ContentView: View {
             .foregroundColor(.orange)
             Spacer()
             HStack{
-                remove
                 Spacer()
-                add
+                car
+                Spacer()
+                animal
+                Spacer()
+                food
+                Spacer()
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -34,21 +56,54 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    var add: some View{
+    var car: some View{
         Button {
-            emojiCount += 1
-            emojiCount = min(emojiCount, emojis.count)
+            emojis = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
+            bottonSelected = 1
+            emojis.shuffle()
+            emojiCount = Int.random(in: 4...emojis.count)
         } label: {
-            Image(systemName: "plus.circle")
+            VStack{
+                Image(systemName: "car")
+                Text("Cars")
+                    .font(.subheadline)
+            }
+            .foregroundColor(bottonSelected == 1 ? .blue: .gray)
+            
         }
     }
     
-    var remove: some View{
+    var animal: some View{
         Button{
-            emojiCount -= 1
-            emojiCount = max(emojiCount, 1)
+            emojis = ["🐵", "🐼", "🐙", "🐔", "🦅", "🐢", "🐷", "🐟", "🦐", "🐳", "🦒", "🐝", "🐊"]
+            bottonSelected = 2
+            emojis.shuffle()
+            emojiCount = Int.random(in: 4...emojis.count)
         } label: {
-            Image(systemName: "minus.circle")
+            VStack{
+                Image(systemName: "pawprint")
+                Text("Animals")
+                    .font(.subheadline)
+            }
+            .foregroundColor(bottonSelected == 2 ? .blue: .gray)
+            
+        }
+    }
+    
+    var food: some View{
+        Button{
+            emojis = ["🍔", "🍕", "🌭", "🌮", "🌶", "🌯", "🥟", "🍙", "🍚", "🍝", "🥖", "🍤"]
+            bottonSelected = 3
+            emojis.shuffle()
+            emojiCount = Int.random(in: 4...emojis.count)
+        } label: {
+            VStack{
+                Image(systemName: "takeoutbag.and.cup.and.straw")
+                Text("Foods")
+                    .font(.subheadline)
+            }
+            .foregroundColor(bottonSelected == 3 ? .blue: .gray)
+            
         }
     }
 }
@@ -70,6 +125,9 @@ struct CardView: View{
         }
         .onTapGesture {
             isFaceUp =  !isFaceUp
+        }
+        .onAppear{
+            isFaceUp = true
         }
     }
 }
