@@ -17,7 +17,6 @@ func widthThatBestFits(cardCount: Int) -> CGFloat{
         return 80
     default:
         return 80
-    
     }
 }
 
