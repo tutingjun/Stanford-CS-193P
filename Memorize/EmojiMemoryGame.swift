@@ -9,14 +9,17 @@ import SwiftUI
 
 
 class EmojiMemoryGame: ObservableObject {
-    static let vehicleList = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
-    static let animalList = ["🐵", "🐼", "🐙", "🐔", "🦅", "🐢", "🐷", "🐟", "🦐", "🐳", "🦒", "🐝", "🐊"]
-    static let foodList = ["🍔", "🍕", "🌭", "🌮", "🌶", "🌯", "🥟", "🍙", "🍚", "🍝", "🥖", "🍤"]
-    static let sportList = ["🏀", "⚽️", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"]
-    static let countryList = ["🇨🇳", "🇰🇷", "🇸🇪", "🇯🇵", "🇺🇸", "🇬🇧", "🇪🇸", "🇪🇺", "🏳️‍🌈"]
-    static let toolsList = ["🪛", "✂️","🔧","🔨","🧲","🔩","🔦","🔌","💡","📱","⌚️","💻"]
+    typealias Card = MemoryGame<String>.Card
+    typealias Theme = MemoryGameTheme<String>.Theme
     
-    static func addThemes(curTheme: inout MemoryGameTheme<String>) -> MemoryGameTheme<String>{
+    private static let vehicleList = ["🚌", "🚇", "🚋", "🚁", "🛳", "⛵️", "🛴", "🚠", "🚀", "🛵", "🛰", "🚂", "⛴"]
+    private static let animalList = ["🐵", "🐼", "🐙", "🐔", "🦅", "🐢", "🐷", "🐟", "🦐", "🐳", "🦒", "🐝", "🐊"]
+    private static let foodList = ["🍔", "🍕", "🌭", "🌮", "🌶", "🌯", "🥟", "🍙", "🍚", "🍝", "🥖", "🍤"]
+    private static let sportList = ["🏀", "⚽️", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓"]
+    private static let countryList = ["🇨🇳", "🇰🇷", "🇸🇪", "🇯🇵", "🇺🇸", "🇬🇧", "🇪🇸", "🇪🇺", "🏳️‍🌈"]
+    private static let toolsList = ["🪛", "✂️","🔧","🔨","🧲","🔩","🔦","🔌","💡","📱","⌚️","💻"]
+    
+    private static func addThemes(curTheme: inout MemoryGameTheme<String>) -> MemoryGameTheme<String>{
         let defaultPairs = 10
         curTheme.addTheme(curTheme.createSingleTheme(name: "Vehicles", emojis: vehicleList, numOfPairs: defaultPairs, colorDisplayed: "orange"))
         curTheme.addTheme(curTheme.createSingleTheme(name: "Animals", emojis: animalList, numOfPairs: defaultPairs, colorDisplayed: "red", randomPairs: true))
@@ -26,11 +29,11 @@ class EmojiMemoryGame: ObservableObject {
         return curTheme
     }
     
-    static func randomTheme(_ curTheme: MemoryGameTheme<String>) -> MemoryGameTheme<String>.Theme{
+    private static func randomTheme(_ curTheme: MemoryGameTheme<String>) -> Theme{
         return curTheme.themes.randomElement()!
     }
     
-    static func createMemoryGame(theme: MemoryGameTheme<String>.Theme) -> MemoryGame<String> {
+    private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         var emojis = theme.emojis
         emojis.shuffle()
         return MemoryGame<String>(numOfParisOfCards: theme.numOfPairs) { pairIndex in
@@ -38,7 +41,7 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    static func parseColor(color: String) -> Color{
+    private static func parseColor(color: String) -> Color{
         switch color{
         case "orange":
             return .orange
@@ -57,7 +60,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     private var themes: MemoryGameTheme<String>
-    private var curTheme: MemoryGameTheme<String>.Theme
+    private var curTheme: Theme
     @Published private var model: MemoryGame<String>
     
     init(){
@@ -67,7 +70,7 @@ class EmojiMemoryGame: ObservableObject {
         model = EmojiMemoryGame.createMemoryGame(theme: curTheme)
     }
     
-    var cards: Array<MemoryGame<String>.Card>{
+    var cards: Array<Card>{
         return model.cards
     }
     
@@ -85,7 +88,7 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Intent
     
-    func choose(_ card: MemoryGame<String>.Card){
+    func choose(_ card: Card){
         model.choose(card)
     }
     

@@ -11,7 +11,10 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
     private(set) var cards: Array<Card>
     private(set) var score: Int
     
-    private var indexOfOnlyFaceUpCard: Int?
+    private var indexOfOnlyFaceUpCard: Int?{
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach{ cards[$0].isFaceUp = ($0 == newValue) } }
+    }
     
     mutating func choose(_ card: Card){
         if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}),
@@ -40,25 +43,18 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
                 }
                 cards[chosenIndex].isSeem = true
                 cards[potentialMatched].isSeem = true
-                indexOfOnlyFaceUpCard = nil
+                cards[chosenIndex].isFaceUp.toggle()
+                
             } else {
-                // If no cards are faced up
-                for index in cards.indices {
-                    // Flip all the cards down
-                    cards[index].isFaceUp = false
-                }
-                // Set the chosen card's time and such card must be the only faced up one
                 cards[chosenIndex].timeChosen = chosenTime
                 indexOfOnlyFaceUpCard = chosenIndex
             }
-            // Make the chosen card face up
-            cards[chosenIndex].isFaceUp.toggle()
         }
     }
     
     init(numOfParisOfCards: Int, createCardContent: (Int) -> CardContent){
         score = 0
-        cards = Array<Card>()
+        cards = []
         
         for pairIndex in 0..<numOfParisOfCards{
             let content = createCardContent(pairIndex)
@@ -69,11 +65,21 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
     }
     
     struct Card: Identifiable {
-        var id: Int
-        var isFaceUp: Bool = false
-        var isMatched: Bool = false
-        var isSeem: Bool = false
+        let id: Int
+        var isFaceUp = false
+        var isMatched = false
+        var isSeem = false
         var timeChosen: Date = Date()
-        var content: CardContent
+        let content: CardContent
+    }
+}
+
+extension Array {
+    var oneAndOnly: Element?{
+        if self.count == 1 {
+            return first
+        } else {
+            return nil
+        }
     }
 }
