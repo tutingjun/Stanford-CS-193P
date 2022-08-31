@@ -27,7 +27,11 @@ struct ContentView: View {
         VStack{
             Text("Memorize!")
                 .font(.largeTitle)
+                .fontWeight(.bold)
                 .padding()
+            
+            SubHeadline(themeTitle: viewModel.themeTitle, score: viewModel.score)
+            
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                     ForEach(viewModel.cards) {card in
@@ -39,7 +43,18 @@ struct ContentView: View {
                     }
                 }
             }
-            .foregroundColor(.orange)
+            .foregroundColor(viewModel.themeColor)
+
+            Button(action: {
+                viewModel.newGame()
+            }, label: {
+                    Text("New Game")
+            })
+            .padding()
+            .font(.headline)
+            .foregroundColor(.white)
+            .background(Color.blue)
+            .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .padding(.horizontal)
     }
@@ -60,6 +75,29 @@ struct CardView: View{
             }
             else {
                 shape.fill()
+            }
+        }
+    }
+}
+
+struct SubHeadline: View{
+    let themeTitle: String
+    let score: Int
+    
+    var body: some View{
+        HStack{
+            VStack(alignment: .leading){
+                Text("Current Theme")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                Text("\(themeTitle)")
+            }
+            Spacer()
+            VStack(alignment: .leading){
+                Text("Score")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                Text("\(score)")
             }
         }
     }
