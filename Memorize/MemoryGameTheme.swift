@@ -34,7 +34,6 @@ struct MemoryGameTheme<CardContent> where CardContent: Hashable{
                 // No values, assign to size
                 numOfPairsAdded = emojis.count
             }
-            
         }
         
         return Theme(name: name,
