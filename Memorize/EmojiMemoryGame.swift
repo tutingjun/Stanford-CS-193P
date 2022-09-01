@@ -20,7 +20,7 @@ class EmojiMemoryGame: ObservableObject {
     private static let toolsList = ["🪛", "✂️","🔧","🔨","🧲","🔩","🔦","🔌","💡","📱","⌚️","💻"]
     
     private static func addThemes(curTheme: inout MemoryGameTheme<String>) -> MemoryGameTheme<String>{
-        let defaultPairs = 10
+        let defaultPairs = 8
         curTheme.addTheme(curTheme.createSingleTheme(name: "Vehicles", emojis: vehicleList, numOfPairs: defaultPairs, colorDisplayed: "orange"))
         curTheme.addTheme(curTheme.createSingleTheme(name: "Animals", emojis: animalList, numOfPairs: defaultPairs, colorDisplayed: "red", randomPairs: true))
         curTheme.addTheme(curTheme.createSingleTheme(name: "Food", emojis: foodList, colorDisplayed: "yellow"))
