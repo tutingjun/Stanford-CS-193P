@@ -1,0 +1,43 @@
+//
+//  Diamond.swift
+//  Set
+//
+//  Created by 涂庭鋆 on 2022/9/1.
+//
+
+import SwiftUI
+
+struct Diamond: Shape{
+    var width: CGFloat
+    var height: CGFloat
+    func path(in rect: CGRect) -> Path {
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let start = CGPoint(
+            x: center.x,
+            y: center.y - height/2
+        )
+        let left = CGPoint(
+            x: center.x - width/2,
+            y: center.y
+        )
+        let button = CGPoint(
+            x: start.x,
+            y: start.y + height
+        )
+        let right = CGPoint(
+            x: left.x + width,
+            y: left.y
+        )
+        
+        let coordinate = [start, left, button, right, start]
+        
+        var p = Path()
+        p.move(to: start)
+//        p.addLine(to: left)
+        p.addLines(coordinate)
+        
+        return p
+    }
+    
+    
+}
