@@ -15,7 +15,17 @@ struct SetGameView: View {
             Text("Set Game!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .padding()
+                .padding(.vertical)
+            
+            HStack{
+                Text("Score")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("\(game.score)")
+                    .fontWeight(.semibold)
+            }
+            
             AspectVGrid(items: game.displayedCards, aspectRatio: 2/3) { item in
                 CardView(card: item)
                     .padding(4)
@@ -26,11 +36,15 @@ struct SetGameView: View {
             .foregroundColor(Color.teal)
             
             HStack{
-                button("New Game"){
+                button("New Game", color: .blue){
                     game.newGame()
                 }
                 Spacer()
-                button("Deal 3 More", deckCount: game.deckCount){
+                button("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
+                    game.hint()
+                }
+                Spacer()
+                button("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
                     game.dealThreeMore()
                 }
             }
@@ -39,7 +53,7 @@ struct SetGameView: View {
     }
     
     @ViewBuilder
-    private func button(_ content: String, deckCount: Int? = nil, actionToDo: @escaping () -> Void) -> some View{
+    private func button(_ content: String, color: Color, actionToDo: @escaping () -> Void) -> some View{
         Button(action: {
             actionToDo()
         }, label: {
@@ -48,7 +62,7 @@ struct SetGameView: View {
         .padding()
         .font(.headline)
         .foregroundColor(.white)
-        .background(convertDeckCount(deckCount) == 0 ? Color.gray : Color.blue)
+        .background(color)
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
     
@@ -65,5 +79,7 @@ struct SetGameView_Previews: PreviewProvider {
     static var previews: some View {
         let game = SetViewModel()
         SetGameView(game: game)
+        SetGameView(game: game)
+            .rotationEffect(.degrees(180))
     }
 }

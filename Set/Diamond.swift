@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct Diamond: Shape{
-    var width: CGFloat
-    var height: CGFloat
+//    var width: CGFloat
+//    var height: CGFloat
     func path(in rect: CGRect) -> Path {
+        let width = rect.size.width
+        let height = rect.size.height
+        
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let start = CGPoint(
             x: center.x,
@@ -33,7 +36,6 @@ struct Diamond: Shape{
         
         var p = Path()
         p.move(to: start)
-//        p.addLine(to: left)
         p.addLines(coordinate)
         
         return p

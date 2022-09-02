@@ -24,6 +24,8 @@ struct CardView: View {
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.green)
                 case .isNotInSet:
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.red)
+                case .hint:
+                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.yellow)
                 default:
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                 }
@@ -43,7 +45,7 @@ struct CardView: View {
         
         VStack{
             ForEach(0..<numOfPattern(number), id: \.self){_ in
-                singleCardPattern(shape, color, shading, width: width)
+                singleCardPattern(shape, color, shading)
                     .frame(width: width, height: width/2, alignment: .center)
 //                    .padding()
             }
@@ -51,33 +53,35 @@ struct CardView: View {
     }
     
     @ViewBuilder
-    private func singleCardPattern(_ shape: String, _ color: String, _ shading: String, width: CGFloat) -> some View{
+    private func singleCardPattern(_ shape: String, _ color: String, _ shading: String) -> some View{
         switch shape{
         case "oval":
-            addShading(content: RoundedRectangle(cornerRadius: 100), shading: shading)
-                .foregroundColor(colorOfCard(color))
+            addShading(content: RoundedRectangle(cornerRadius: 100), shading: shading, color: colorOfCard(color))
         case "squiggle":
-            addShading(content: Rectangle(), shading: shading)
-                .foregroundColor(colorOfCard(color))
+            addShading(content: Squiggle(), shading: shading, color: colorOfCard(color))
         case "diamond":
-            addShading(content: Diamond(width: width, height: width/2), shading: shading)
-                .foregroundColor(colorOfCard(color))
+            addShading(content: Diamond(), shading: shading, color: colorOfCard(color))
         default:
             Rectangle()
         }
     }
     
     @ViewBuilder
-    private func addShading<cardShape>(content: cardShape, shading: String) -> some View where cardShape: Shape{
+    private func addShading<cardShape>(content: cardShape, shading: String, color: Color) -> some View where cardShape: Shape{
         switch shading{
         case "solid":
-            content.fill()
+            content
+                .fill()
+                .foregroundColor(color)
         case "striped":
-            content.fill().opacity(DrawingConstants.opacity)
+            StripShading(shape: content, color: color)
         case "open":
-            content.stroke(lineWidth: DrawingConstants.lineWidth)
+            content
+                .stroke(lineWidth: DrawingConstants.lineWidth)
+                .foregroundColor(color)
         default:
             content
+                .foregroundColor(color)
         }
     }
     
@@ -119,7 +123,7 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(card: SetGame.card(color: .red, shape: .diamond, shading: .striped, number: .three))
+        CardView(card: SetGame.card(color: .red, shape: .squiggle, shading: .open, number: .two))
             .aspectRatio(2/3, contentMode: .fit)
     }
 }

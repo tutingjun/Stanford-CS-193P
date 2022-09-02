@@ -23,6 +23,13 @@ class SetViewModel: ObservableObject {
         return model.deckCount
     }
     
+    var score: Int{
+        return model.score
+    }
+    
+    var hasCheat: Bool{
+        return model.hasHint
+    }
     // MARK: - Intent
     func choose(_ card: SetGame.card){
         model.choose(card)
@@ -30,6 +37,12 @@ class SetViewModel: ObservableObject {
     
     func newGame(){
         model = SetGame()
+    }
+    
+    func hint(){
+        if hasCheat{
+            model.hint()
+        }
     }
     
     func dealThreeMore(){

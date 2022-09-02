@@ -12,6 +12,7 @@ struct SetGame{
     
     private var deck: Array<card>
     private(set) var displayedCards: Array<card>
+    private(set) var score: Int
     
     private var selectedCard: Array<card>{
         return displayedCards.filter({ $0.state == .isSelected })
@@ -22,12 +23,28 @@ struct SetGame{
     private var notSetCard: Array<card>{
         return displayedCards.filter({ $0.state == .isNotInSet })
     }
+    private var hintCard: Array<card>{
+        return displayedCards.filter({ $0.state == .hint })
+    }
+    private var hintSetIndex: Array<Int>
+    private var ignoreCardsForHint: Array<card>{
+        let index = hintCard.count / 3
+        return Array(hintCard[0..<index*3]) + inSetCard
+    }
     var deckCount: Int{
         return deck.count
+    }
+    var hasHint: Bool{
+        if hintSetIndex.count == 0{
+            return false
+        }
+        return true
     }
     
     init(){
         deck = []
+        score = 0
+        hintSetIndex = []
         for color in card.color.allCases{
             for shape in card.shape.allCases{
                 for shading in card.shading.allCases{
@@ -40,6 +57,7 @@ struct SetGame{
         deck.shuffle()
         displayedCards = Array(deck[0..<12])
         deck = deck.filter({ !displayedCards.containCard($0.id) })
+        getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
     }
     
     mutating func choose(_ card: card){
@@ -47,6 +65,7 @@ struct SetGame{
             // If here are already 3 matching Set cards
             if inSetCard.count == 3 {
                 removeInSetCards(card: card, index: chosenIndex)
+                getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
                 return
             }
             
@@ -62,24 +81,59 @@ struct SetGame{
                 (card.state == .isSelected) {
                 // Deselect a card
                 displayedCards[chosenIndex].state = .default
-            } else if card.state == .default {
+                getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards, selectedCards: selectedCard))
+            } else{
                 // Select a card
                 displayedCards[chosenIndex].state = .isSelected
+                getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards, selectedCards: selectedCard))
                 if selectedCard.count == 3{
                     // Change Card status
                     let state = isSet(cards: selectedCard) ? cardState.isInSet : cardState.isNotInSet
+                    if state == .isInSet{
+                        score += 3
+                    } else {
+                        score -= 1
+                    }
                     setCardSetState(selectedCard: selectedCard, state: state)
                 }
             }
         }
     }
     
+    mutating func hint(){
+        score -= 2
+        hintSetIndex = hintSetIndex.filter({displayedCards[$0].state != .hint})
+        if selectedCard.count == 0{
+            displayedCards[hintSetIndex.removeFirst()].state = .hint
+        } else {
+            hintSetIndex = hintSetIndex.filter({displayedCards[$0].state != .isSelected})
+            displayedCards[hintSetIndex.removeFirst()].state = .hint
+        }
+        
+        if hintSetIndex == []{
+            getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
+        }
+    }
+    
     mutating func getThreeCards(){
+        if hasHint{
+            score -= 3
+        }
         if inSetCard.count == 3 {
             removeInSetCards()
         } else {
             displayedCards += Array(deck[0..<3])
             deck = deck.filter({ !displayedCards.containCard($0.id) })
+        }
+        getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
+    }
+    
+    private mutating func getHintIndex(hasSetCards: Array<card>?){
+        hintSetIndex = []
+        if let canInSetCards = hasSetCards{
+            canInSetCards.forEach{ card in
+                hintSetIndex.append(displayedCards.firstIndex(where: { $0.id == card.id })!)
+            }
         }
     }
     
@@ -101,8 +155,41 @@ struct SetGame{
         }
     }
     
+    private func hasSet(displayedCard: Array<card>, selectedCards: Array<card>? = nil) -> Array<card>?{
+        let defaultCards = displayedCards.filter({ !ignoreCardsForHint.containCard($0.id) })
+        let saveSelectedCards = selectedCards ?? []
+        
+        if saveSelectedCards.count == 1{
+            for j in 0..<defaultCards.count{
+                for k in 0..<defaultCards.count{
+                    if isSet(cards: [saveSelectedCards[0], defaultCards[j], defaultCards[k]]){
+                        return [saveSelectedCards[0], defaultCards[j], defaultCards[k]]
+                    }
+                }
+            }
+        } else if saveSelectedCards.count == 2{
+            for k in 0..<defaultCards.count{
+                if isSet(cards: [saveSelectedCards[0], saveSelectedCards[1], defaultCards[k]]){
+                    return [saveSelectedCards[0], saveSelectedCards[1], defaultCards[k]]
+                }
+            }
+        } else if saveSelectedCards.count == 0 {
+            for i in 0..<defaultCards.count{
+                for j in 0..<defaultCards.count{
+                    for k in 0..<defaultCards.count{
+                        if isSet(cards: [defaultCards[i], defaultCards[j], defaultCards[k]]){
+                            return [defaultCards[i], defaultCards[j], defaultCards[k]]
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     private func isSet(cards: Array<card>) -> Bool{
         let categories = ["color","shape", "shading", "number"]
+        var sameCat = 0
         for cat in categories{
             var catList: Array<String> = []
             cards.forEach{ card in
@@ -113,9 +200,11 @@ struct SetGame{
             // has only two same category and one different therefore not conform to the rules
             if catList.count == 2{
                 return false
+            } else if catList.count == 1{
+                sameCat += 1
             }
         }
-        return true
+        return true && sameCat != 4
     }
     
     private mutating func setCardSetState(selectedCard: Array<card>, state: cardState){
@@ -143,7 +232,7 @@ struct SetGame{
         }
         
         enum cardState{
-            case isSelected, isInSet, isNotInSet, `default`
+            case isSelected, isInSet, isNotInSet, hint, `default`
         }
         
         enum color: String, CaseIterable{

@@ -16,6 +16,8 @@
 		FBA541B228C1192300394FEC /* SetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B128C1192300394FEC /* SetViewModel.swift */; };
 		FBA541B428C11F6000394FEC /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B328C11F6000394FEC /* Diamond.swift */; };
 		FBA541B628C1418F00394FEC /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B528C1418F00394FEC /* AspectVGrid.swift */; };
+		FBA541B828C2611200394FEC /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B728C2611100394FEC /* Squiggle.swift */; };
+		FBA541BA28C2684800394FEC /* StripShading.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B928C2684700394FEC /* StripShading.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		FBA541B128C1192300394FEC /* SetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModel.swift; sourceTree = "<group>"; };
 		FBA541B328C11F6000394FEC /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		FBA541B528C1418F00394FEC /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		FBA541B728C2611100394FEC /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
+		FBA541B928C2684700394FEC /* StripShading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripShading.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +70,10 @@
 				FBA541AD28C10C5600394FEC /* SetGameModel.swift */,
 				FBA541B128C1192300394FEC /* SetViewModel.swift */,
 				FBA541AF28C115FD00394FEC /* CardView.swift */,
+				FBA541B928C2684700394FEC /* StripShading.swift */,
 				FBA541B328C11F6000394FEC /* Diamond.swift */,
 				FBA541B528C1418F00394FEC /* AspectVGrid.swift */,
+				FBA541B728C2611100394FEC /* Squiggle.swift */,
 				FBA541A328C10B6700394FEC /* Assets.xcassets */,
 				FBA541A528C10B6700394FEC /* Preview Content */,
 			);
@@ -153,7 +159,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBA541B428C11F6000394FEC /* Diamond.swift in Sources */,
+				FBA541BA28C2684800394FEC /* StripShading.swift in Sources */,
 				FBA541B228C1192300394FEC /* SetViewModel.swift in Sources */,
+				FBA541B828C2611200394FEC /* Squiggle.swift in Sources */,
 				FBA541B628C1418F00394FEC /* AspectVGrid.swift in Sources */,
 				FBA541A228C10B6200394FEC /* SetGameView.swift in Sources */,
 				FBA541A028C10B6200394FEC /* SetApp.swift in Sources */,
