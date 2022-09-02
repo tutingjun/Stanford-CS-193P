@@ -19,6 +19,10 @@ class SetViewModel: ObservableObject {
         return model.displayedCards
     }
     
+    var deckCount: Int {
+        return model.deckCount
+    }
+    
     // MARK: - Intent
     func choose(_ card: SetGame.card){
         model.choose(card)
@@ -26,5 +30,11 @@ class SetViewModel: ObservableObject {
     
     func newGame(){
         model = SetGame()
+    }
+    
+    func dealThreeMore(){
+        if deckCount != 0{
+            model.getThreeCards()
+        }
     }
 }

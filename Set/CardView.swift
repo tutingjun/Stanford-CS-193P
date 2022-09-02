@@ -99,8 +99,8 @@ struct CardView: View {
         switch color {
         case "green":
             return .green
-        case "orange":
-            return .orange
+        case "purple":
+            return .purple
         case "red":
             return .red
         default:

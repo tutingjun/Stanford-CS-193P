@@ -23,15 +23,15 @@ struct SetGameView: View {
                         game.choose(item)
                     }
             }
-            .foregroundColor(.purple)
+            .foregroundColor(Color.teal)
             
             HStack{
                 button("New Game"){
                     game.newGame()
                 }
                 Spacer()
-                button("Deal 3 More"){
-                    
+                button("Deal 3 More", deckCount: game.deckCount){
+                    game.dealThreeMore()
                 }
             }
         }
@@ -39,7 +39,7 @@ struct SetGameView: View {
     }
     
     @ViewBuilder
-    private func button(_ content: String, actionToDo: @escaping () -> Void) -> some View{
+    private func button(_ content: String, deckCount: Int? = nil, actionToDo: @escaping () -> Void) -> some View{
         Button(action: {
             actionToDo()
         }, label: {
@@ -48,8 +48,16 @@ struct SetGameView: View {
         .padding()
         .font(.headline)
         .foregroundColor(.white)
-        .background(Color.blue)
+        .background(convertDeckCount(deckCount) == 0 ? Color.gray : Color.blue)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+    }
+    
+    private func convertDeckCount(_ deck: Int?) -> Int{
+        if let saveCount = deck{
+            return saveCount
+        } else {
+            return 1
+        }
     }
 }
 
