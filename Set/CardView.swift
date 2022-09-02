@@ -34,11 +34,11 @@ struct CardView: View {
     }
     
     @ViewBuilder
-    private func cardStack(content: Dictionary<String, Any>, width: CGFloat) -> some View{
-        let shape = content["shape"] as! SetGame.card.shape
-        let color = content["color"] as! SetGame.card.color
-        let shading = content["shading"] as! SetGame.card.shading
-        let number = content["number"] as! SetGame.card.number
+    private func cardStack(content: Dictionary<String, String>, width: CGFloat) -> some View{
+        let shape = content["shape"]!
+        let color = content["color"]!
+        let shading = content["shading"]!
+        let number = content["number"]!
         let width = width * 2/3
         
         VStack{
@@ -51,51 +51,61 @@ struct CardView: View {
     }
     
     @ViewBuilder
-    private func singleCardPattern(_ shape: SetGame.card.shape, _ color: SetGame.card.color, _ shading: SetGame.card.shading, width: CGFloat) -> some View{
+    private func singleCardPattern(_ shape: String, _ color: String, _ shading: String, width: CGFloat) -> some View{
         switch shape{
-        case.oval:
+        case "oval":
             addShading(content: RoundedRectangle(cornerRadius: 100), shading: shading)
                 .foregroundColor(colorOfCard(color))
-        case .squiggle:
+        case "squiggle":
             addShading(content: Rectangle(), shading: shading)
                 .foregroundColor(colorOfCard(color))
-        case .diamond:
+        case "diamond":
             addShading(content: Diamond(width: width, height: width/2), shading: shading)
                 .foregroundColor(colorOfCard(color))
+        default:
+            Rectangle()
         }
     }
     
     @ViewBuilder
-    private func addShading<cardShape>(content: cardShape, shading: SetGame.card.shading) -> some View where cardShape: Shape{
+    private func addShading<cardShape>(content: cardShape, shading: String) -> some View where cardShape: Shape{
         switch shading{
-        case .solid:
+        case "solid":
             content.fill()
-        case .striped:
+        case "striped":
             content.fill().opacity(DrawingConstants.opacity)
-        case .open:
+        case "open":
             content.stroke(lineWidth: DrawingConstants.lineWidth)
+        default:
+            content
         }
     }
     
-    private func numOfPattern(_ num: SetGame.card.number) -> Int {
+    private func numOfPattern(_ num: String) -> Int {
         switch num{
-        case .one:
+        case "one":
             return 1
-        case .two:
+        case "two":
             return 2
-        case .three:
+        case "three":
             return 3
+        default:
+            print("error")
+            return 0
         }
     }
     
-    private func colorOfCard(_ color: SetGame.card.color) -> Color{
+    private func colorOfCard(_ color: String) -> Color{
         switch color {
-        case.green:
+        case "green":
             return .green
-        case.orange:
+        case "orange":
             return .orange
-        case .red:
+        case "red":
             return .red
+        default:
+            print("error")
+            return .white
         }
     }
     

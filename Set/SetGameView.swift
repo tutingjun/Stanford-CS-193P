@@ -16,7 +16,7 @@ struct SetGameView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
-            AspectVGrid(items: game.first12Cards, aspectRatio: 2/3) { item in
+            AspectVGrid(items: game.displayedCards, aspectRatio: 2/3) { item in
                 CardView(card: item)
                     .padding(4)
                     .onTapGesture {
@@ -27,7 +27,7 @@ struct SetGameView: View {
             
             HStack{
                 button("New Game"){
-                    
+                    game.newGame()
                 }
                 Spacer()
                 button("Deal 3 More"){

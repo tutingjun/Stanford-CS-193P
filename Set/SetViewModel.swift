@@ -15,12 +15,16 @@ class SetViewModel: ObservableObject {
     }
 
     
-    var first12Cards: Array<SetGame.card>{
-        return Array(model.cards[0..<12])
+    var displayedCards: Array<SetGame.card>{
+        return model.displayedCards
     }
     
     // MARK: - Intent
     func choose(_ card: SetGame.card){
         model.choose(card)
+    }
+    
+    func newGame(){
+        model = SetGame()
     }
 }
