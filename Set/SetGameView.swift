@@ -40,7 +40,11 @@ struct SetGameView: View {
                 .tag(2)
         }
         .onChange(of: activeTab){ _ in
-            gameMulti.newGame()
+            if activeTab == 1{
+                game.newGame()
+            } else {
+                gameMulti.newGame()
+            }
         }
     
     }
