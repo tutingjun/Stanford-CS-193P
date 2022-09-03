@@ -9,14 +9,42 @@ import SwiftUI
 
 struct SetGameView: View {
     @ObservedObject var game: SetViewModel
-    var isMultiplayer: Bool
+    @ObservedObject var gameMulti: SetViewModel
+    
+    @State private var activeTab: Int = 1
+    
+    init(game: SetViewModel, gameMulti: SetViewModel) {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
+        self.game = game
+        self.gameMulti = gameMulti
+    }
     
     var body: some View {
-        if isMultiplayer{
-            twoPlayer(game)
-        } else {
+        TabView(selection: $activeTab){
             onePlayer(game)
+                .tabItem{
+                    Image(systemName: "person.fill")
+                    Text("One player")
+                        .font(.title3)
+                }
+                .tag(1)
+
+            twoPlayer(gameMulti)
+                .tabItem{
+                    Image(systemName: "person.2.fill")
+                    Text("second Tab")
+                        .font(.title3)
+                }
+                .tag(2)
         }
+        .onChange(of: activeTab){ _ in
+            gameMulti.newGame()
+        }
+    
     }
     
     @ViewBuilder
@@ -67,7 +95,7 @@ struct SetGameView: View {
                 }
             }
         }
-        .padding(.horizontal)
+        .padding([.leading, .bottom, .trailing])
     }
     
     @ViewBuilder
@@ -105,7 +133,7 @@ struct SetGameView: View {
                 }
             }
         }
-        .padding(.horizontal)
+        .padding([.leading, .bottom, .trailing])
     }
     
     @ViewBuilder
@@ -138,9 +166,9 @@ struct SetGameView: View {
 struct SetGameView_Previews: PreviewProvider {
     static var previews: some View {
         let game = SetViewModel(isMultiplayer: true)
-        SetGameView(game: game, isMultiplayer: true)
         
         let gameNew = SetViewModel(isMultiplayer: false)
-        SetGameView(game: gameNew, isMultiplayer: false)
+        SetGameView(game: gameNew, gameMulti: game)
+            
     }
 }

@@ -51,6 +51,7 @@ class SetViewModel: ObservableObject {
     
     func newGame(){
         model = SetGame()
+        player = Player(isMultiplayer: isMultiplayer)
     }
     
     func hint(by curPlayer: Player.singlePlayer){
