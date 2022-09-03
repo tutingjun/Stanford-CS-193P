@@ -29,15 +29,13 @@ struct SetGameView: View {
                 .tabItem{
                     Image(systemName: "person.fill")
                     Text("One player")
-                        .font(.title3)
                 }
                 .tag(1)
 
             twoPlayer(gameMulti)
                 .tabItem{
                     Image(systemName: "person.2.fill")
-                    Text("second Tab")
-                        .font(.title3)
+                    Text("Two players")
                 }
                 .tag(2)
         }
