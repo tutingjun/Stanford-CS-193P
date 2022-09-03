@@ -92,8 +92,16 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     
+    func unSelect(_ card: Card){
+        model.unSelect(card)
+    }
+    
     func newGame(){
         curTheme = EmojiMemoryGame.randomTheme(themes)
         model = EmojiMemoryGame.createMemoryGame(theme: curTheme)
+    }
+    
+    func shuffle(){
+        model.shuffle()
     }
 }

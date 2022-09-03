@@ -16,6 +16,7 @@
 		FBA5418E28BFB88600394FEC /* MemoryGameTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5418D28BFB88500394FEC /* MemoryGameTheme.swift */; };
 		FBA5419028C06DB600394FEC /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5418F28C06DB500394FEC /* AspectVGrid.swift */; };
 		FBA5419228C079A100394FEC /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5419128C079A100394FEC /* Pie.swift */; };
+		FBEA6ACE28C3DDAF007C0E2A /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA6ACD28C3DDAF007C0E2A /* Cardify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		FBA5418D28BFB88500394FEC /* MemoryGameTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameTheme.swift; sourceTree = "<group>"; };
 		FBA5418F28C06DB500394FEC /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		FBA5419128C079A100394FEC /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
+		FBEA6ACD28C3DDAF007C0E2A /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			children = (
 				FBA5417B28BD5C4B00394FEC /* MemorizeApp.swift */,
 				FBA5417D28BD5C4B00394FEC /* EmojiMemoryGameView.swift */,
+				FBEA6ACD28C3DDAF007C0E2A /* Cardify.swift */,
 				FBA5419128C079A100394FEC /* Pie.swift */,
 				FBA5418F28C06DB500394FEC /* AspectVGrid.swift */,
 				FBA5418928BEA57900394FEC /* MemoryGame.swift */,
@@ -154,6 +157,7 @@
 			files = (
 				FBA5418A28BEA57900394FEC /* MemoryGame.swift in Sources */,
 				FBA5417E28BD5C4B00394FEC /* EmojiMemoryGameView.swift in Sources */,
+				FBEA6ACE28C3DDAF007C0E2A /* Cardify.swift in Sources */,
 				FBA5419028C06DB600394FEC /* AspectVGrid.swift in Sources */,
 				FBA5418E28BFB88600394FEC /* MemoryGameTheme.swift in Sources */,
 				FBA5419228C079A100394FEC /* Pie.swift in Sources */,
@@ -296,7 +300,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,7 +331,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
