@@ -47,7 +47,6 @@ struct CardView: View {
             ForEach(0..<numOfPattern(number), id: \.self){_ in
                 singleCardPattern(shape, color, shading)
                     .frame(width: width, height: width/2, alignment: .center)
-//                    .padding()
             }
         }
     }
@@ -123,7 +122,7 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(card: SetGame.card(color: .red, shape: .squiggle, shading: .open, number: .two))
+        CardView(card: SetGame.card(color: .red, shape: .diamond, shading: .open, number: .one))
             .aspectRatio(2/3, contentMode: .fit)
     }
 }

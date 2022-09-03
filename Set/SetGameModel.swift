@@ -10,9 +10,10 @@ import Foundation
 struct SetGame{
     private typealias cardState = SetGame.card.cardState
     
-    private var deck: Array<card>
     private(set) var displayedCards: Array<card>
-    private(set) var score: Int
+    private var deck: Array<card>
+    private var timeOfFirstSelection: Date
+    private var hintSetIndex: Array<Int>
     
     private var selectedCard: Array<card>{
         return displayedCards.filter({ $0.state == .isSelected })
@@ -26,7 +27,6 @@ struct SetGame{
     private var hintCard: Array<card>{
         return displayedCards.filter({ $0.state == .hint })
     }
-    private var hintSetIndex: Array<Int>
     private var ignoreCardsForHint: Array<card>{
         let index = hintCard.count / 3
         return Array(hintCard[0..<index*3]) + inSetCard
@@ -43,8 +43,8 @@ struct SetGame{
     
     init(){
         deck = []
-        score = 0
         hintSetIndex = []
+        timeOfFirstSelection = Date()
         for color in card.color.allCases{
             for shape in card.shape.allCases{
                 for shading in card.shading.allCases{
@@ -60,11 +60,19 @@ struct SetGame{
         getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
     }
     
-    mutating func choose(_ card: card){
+    mutating func choose(_ card: card, by player: Player.singlePlayer, _ playerObj: inout Player, isMultiplayer: Bool){
+        if !player.isSelecting{
+            return
+        }
         if let chosenIndex = displayedCards.firstIndex(where: { $0.id == card.id }){
             // If here are already 3 matching Set cards
             if inSetCard.count == 3 {
-                removeInSetCards(card: card, index: chosenIndex)
+                if isMultiplayer{
+                    removeInSetCards()
+                    playerObj.changeIsSelecting(player: player)
+                } else {
+                    removeInSetCards(card: card, index: chosenIndex)
+                }
                 getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
                 return
             }
@@ -72,7 +80,11 @@ struct SetGame{
             // If there are already 3 non-matching Set cards
             if notSetCard.count == 3{
                 setCardSetState(selectedCard: notSetCard, state: .default)
-                displayedCards[chosenIndex].state = .isSelected
+                if !isMultiplayer{
+                    displayedCards[chosenIndex].state = .isSelected
+                } else {
+                    playerObj.changeIsSelecting(player: player)
+                }
                 return
             }
             
@@ -85,23 +97,30 @@ struct SetGame{
             } else{
                 // Select a card
                 displayedCards[chosenIndex].state = .isSelected
+                if selectedCard.count == 1{
+                    timeOfFirstSelection = Date()
+                }
                 getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards, selectedCards: selectedCard))
                 if selectedCard.count == 3{
                     // Change Card status
                     let state = isSet(cards: selectedCard) ? cardState.isInSet : cardState.isNotInSet
-                    if state == .isInSet{
-                        score += 3
-                    } else {
-                        score -= 1
-                    }
+                    let secondsInterval = Int(Date().timeIntervalSince(timeOfFirstSelection))
                     setCardSetState(selectedCard: selectedCard, state: state)
+                    if state == .isInSet{
+                        playerObj.addScore(player: player, score: 3 * max(5 - secondsInterval, 1))
+                    } else {
+                        playerObj.addScore(player: player, score: -1 * max(min(secondsInterval, 5), 1))
+                    }
                 }
             }
         }
     }
     
-    mutating func hint(){
-        score -= 2
+    mutating func hint(from player:Player.singlePlayer, _ playerObj: inout Player){
+        if !player.isSelecting{
+            return
+        }
+        playerObj.addScore(player: player, score: -2)
         hintSetIndex = hintSetIndex.filter({displayedCards[$0].state != .hint})
         if selectedCard.count == 0{
             displayedCards[hintSetIndex.removeFirst()].state = .hint
@@ -113,12 +132,10 @@ struct SetGame{
         if hintSetIndex == []{
             getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
         }
+        
     }
     
-    mutating func getThreeCards(){
-        if hasHint{
-            score -= 3
-        }
+    mutating func getThreeCards(from player:Player.singlePlayer, _ playerObj: inout Player){
         if inSetCard.count == 3 {
             removeInSetCards()
         } else {
@@ -126,6 +143,9 @@ struct SetGame{
             deck = deck.filter({ !displayedCards.containCard($0.id) })
         }
         getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
+        if hasHint{
+            playerObj.addScore(player: player, score: -3)
+        }
     }
     
     private mutating func getHintIndex(hasSetCards: Array<card>?){

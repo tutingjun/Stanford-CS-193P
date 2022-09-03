@@ -18,6 +18,7 @@
 		FBA541B628C1418F00394FEC /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B528C1418F00394FEC /* AspectVGrid.swift */; };
 		FBA541B828C2611200394FEC /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B728C2611100394FEC /* Squiggle.swift */; };
 		FBA541BA28C2684800394FEC /* StripShading.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B928C2684700394FEC /* StripShading.swift */; };
+		FBA541BC28C2BAB200394FEC /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541BB28C2BAB200394FEC /* PlayerModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		FBA541B528C1418F00394FEC /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		FBA541B728C2611100394FEC /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 		FBA541B928C2684700394FEC /* StripShading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripShading.swift; sourceTree = "<group>"; };
+		FBA541BB28C2BAB200394FEC /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				FBA5419F28C10B6200394FEC /* SetApp.swift */,
 				FBA541A128C10B6200394FEC /* SetGameView.swift */,
 				FBA541AD28C10C5600394FEC /* SetGameModel.swift */,
+				FBA541BB28C2BAB200394FEC /* PlayerModel.swift */,
 				FBA541B128C1192300394FEC /* SetViewModel.swift */,
 				FBA541AF28C115FD00394FEC /* CardView.swift */,
 				FBA541B928C2684700394FEC /* StripShading.swift */,
@@ -158,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA541BC28C2BAB200394FEC /* PlayerModel.swift in Sources */,
 				FBA541B428C11F6000394FEC /* Diamond.swift in Sources */,
 				FBA541BA28C2684800394FEC /* StripShading.swift in Sources */,
 				FBA541B228C1192300394FEC /* SetViewModel.swift in Sources */,
@@ -303,6 +307,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +337,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

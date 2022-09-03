@@ -9,9 +9,14 @@ import Foundation
 
 class SetViewModel: ObservableObject {
     @Published private var model: SetGame
+    @Published private var player: Player
     
-    init(){
+    private var isMultiplayer: Bool
+    
+    init(isMultiplayer: Bool){
         model = SetGame()
+        player = Player(isMultiplayer: isMultiplayer)
+        self.isMultiplayer = isMultiplayer
     }
 
     
@@ -23,31 +28,46 @@ class SetViewModel: ObservableObject {
         return model.deckCount
     }
     
-    var score: Int{
-        return model.score
-    }
-    
     var hasCheat: Bool{
         return model.hasHint
     }
+    
+    var canSelect: Bool{
+        return player.canSelect
+    }
+    
+    var players: Array<Player.singlePlayer>{
+        return player.players
+    }
+    
     // MARK: - Intent
     func choose(_ card: SetGame.card){
-        model.choose(card)
+        if !canSelect{
+            let curPlayer = players.filter({$0.isSelecting == true})[0]
+            model.choose(card, by: curPlayer, &player, isMultiplayer: isMultiplayer)
+        }
+        
     }
     
     func newGame(){
         model = SetGame()
     }
     
-    func hint(){
-        if hasCheat{
-            model.hint()
+    func hint(by curPlayer: Player.singlePlayer){
+        if hasCheat && !canSelect{
+            model.hint(from: curPlayer, &player)
         }
     }
     
-    func dealThreeMore(){
+    func dealThreeMore(by curPlayer: Player.singlePlayer){
         if deckCount != 0{
-            model.getThreeCards()
+            model.getThreeCards(from: curPlayer, &player)
+        }
+    }
+    
+    func playerChoose(by curPlayer: Player.singlePlayer){
+        if canSelect{
+            player.changeIsSelecting(player: curPlayer)
         }
     }
 }

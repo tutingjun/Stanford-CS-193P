@@ -31,8 +31,12 @@ struct Diamond: Shape{
             x: left.x + width,
             y: left.y
         )
+        let end = CGPoint(
+            x: start.x-1,
+            y: start.y
+        )
         
-        let coordinate = [start, left, button, right, start]
+        let coordinate = [start, left, button, right, end]
         
         var p = Path()
         p.move(to: start)

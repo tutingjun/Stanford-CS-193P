@@ -9,10 +9,15 @@ import SwiftUI
 
 @main
 struct SetApp: App {
-    let game = SetViewModel()
+    var multiplayer = false
+    let game: SetViewModel
+    
+    init(){
+        game = SetViewModel(isMultiplayer: multiplayer)
+    }
     var body: some Scene {
         WindowGroup {
-            SetGameView(game: game)
+            SetGameView(game: game, isMultiplayer: multiplayer)
         }
     }
 }

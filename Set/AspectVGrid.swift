@@ -8,28 +8,41 @@
 import SwiftUI
 
 struct AspectVGrid<Item, ItemView>: View  where ItemView: View, Item: Identifiable {
+    var isMiddle: Bool
     var items: [Item]
     var aspectRatio: CGFloat
     var content: (Item) -> ItemView
     
-    init(items: [Item], aspectRatio: CGFloat, @ViewBuilder content: @escaping (Item) -> ItemView){
+    init(items: [Item], aspectRatio: CGFloat, isMiddle: Bool, @ViewBuilder content: @escaping (Item) -> ItemView){
         self.items = items
         self.aspectRatio = aspectRatio
         self.content = content
+        self.isMiddle = isMiddle
     }
     
     var body: some View {
         GeometryReader{ geometry in
             VStack{
-                let width: CGFloat = widthThatFits(itemCount: items.count, in: geometry.size, itemAspectRatio: aspectRatio)
-                LazyVGrid(columns: [adaptiveGridCount(width: width)], spacing: 0) {
-                    ForEach(items) { item in
-                        content(item).aspectRatio(aspectRatio,contentMode: .fit)
-                    }
+                if isMiddle{
+                    Spacer()
+                    cardGrid(items: items, aspectRatio: aspectRatio, size: geometry.size, content: content)
+                    Spacer()
+                } else {
+                    cardGrid(items: items, aspectRatio: aspectRatio, size: geometry.size, content: content)
+                    Spacer(minLength: 0)
                 }
-                Spacer(minLength: 0)
             }
            
+        }
+    }
+    
+    @ViewBuilder
+    private func cardGrid(items: [Item], aspectRatio: CGFloat, size: CGSize, @ViewBuilder content: @escaping (Item) -> ItemView) -> some View where ItemView: View, Item: Identifiable {
+        let width: CGFloat = widthThatFits(itemCount: items.count, in: size, itemAspectRatio: aspectRatio)
+        LazyVGrid(columns: [adaptiveGridCount(width: width)], spacing: 0) {
+            ForEach(items) { item in
+                content(item).aspectRatio(aspectRatio,contentMode: .fit)
+            }
         }
     }
     
