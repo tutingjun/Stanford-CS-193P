@@ -1,3 +1,4 @@
 # Set
 
-Standford CS193P Assignment 3
+Stanford CS193P Assignment 3
+
