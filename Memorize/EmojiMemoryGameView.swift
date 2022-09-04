@@ -68,7 +68,7 @@ struct EmojiMemoryGameView: View {
             if isUndealt(card) || (card.isMatched && !card.isFaceUp) {
                 Color.clear
             } else {
-                CardView(card: card, model: game)
+                CardView(card: card)
                     .matchedGeometryEffect(id: card.id, in: dealingNameSpace)
                     .padding(4)
                     .transition(AnyTransition.asymmetric(insertion: .identity, removal: isNewGame ? .opacity : .scale))
@@ -87,7 +87,7 @@ struct EmojiMemoryGameView: View {
     var deckBody: some View {
         ZStack{
             ForEach(game.cards.filter(isUndealt)){ card in
-                CardView(card: card, model: game)
+                CardView(card: card)
                     .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity))
                     .matchedGeometryEffect(id: card.id, in: dealingNameSpace)
             }
@@ -148,7 +148,6 @@ struct EmojiMemoryGameView: View {
 
 struct CardView: View{
     let card: EmojiMemoryGame.Card
-    @ObservedObject var model: EmojiMemoryGame
     
     @State private var animatedBonusRemaining: Double = 0
     
@@ -163,15 +162,15 @@ struct CardView: View{
                                 withAnimation(.linear(duration: card.bonusTimeRemaining)){
                                     animatedBonusRemaining = 0
                                 }
-                                print(card.bonusRemaining)
-                                if card.bonusRemaining == 0{
-                                    print("here")
-                                    model.unSelect(card)
-                                }
                             }
                     } else {
-                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - card.bonusRemaining) * 360-90))
+                        if card.bonusRemaining == 0{
+                            Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: -360-90))
+                        } else {
+                                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - card.bonusRemaining) * 360-90))
+                        }
                     }
+            
                 }
                 .padding(5).opacity(0.5)
                 Text(card.content)
