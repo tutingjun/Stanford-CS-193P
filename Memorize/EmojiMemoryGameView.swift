@@ -164,10 +164,10 @@ struct CardView: View{
                                 }
                             }
                     } else {
-                        if card.bonusRemaining == 0{
+                        if card.bonusRemaining == 1{
                             Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: -360-90))
                         } else {
-                                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - card.bonusRemaining) * 360-90))
+                            Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - card.bonusRemaining) * 360-90))
                         }
                     }
             
