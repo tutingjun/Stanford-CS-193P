@@ -24,6 +24,10 @@ class SetViewModel: ObservableObject {
         return model.displayedCards
     }
     
+    var deck: Array<SetGame.card> {
+        return model.deck
+    }
+    
     var deckCount: Int {
         return model.deckCount
     }

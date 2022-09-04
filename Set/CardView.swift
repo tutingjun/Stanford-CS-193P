@@ -10,7 +10,6 @@ import SwiftUI
 
 struct CardView: View {
     let card: SetGame.card
-    
     var body: some View {
         GeometryReader{ geometry in
             ZStack(alignment: .center) {

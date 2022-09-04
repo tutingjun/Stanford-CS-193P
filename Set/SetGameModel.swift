@@ -11,7 +11,7 @@ struct SetGame{
     private typealias cardState = SetGame.card.cardState
     
     private(set) var displayedCards: Array<card>
-    private var deck: Array<card>
+    private(set) var deck: Array<card>
     private var timeOfFirstSelection: Date
     private var hintSetIndex: Array<Int>
     

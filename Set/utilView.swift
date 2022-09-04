@@ -73,8 +73,47 @@ struct AspectVGrid<Item, ItemView>: View  where ItemView: View, Item: Identifiab
     }
 }
 
-//struct AspectVGrid_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AspectVGrid()
-//    }
-//}
+struct gameButton: View{
+    var content: String
+    var color: Color
+    var actionToDo: () -> Void
+    
+    init(_ content: String, color: Color, actionToDo: @escaping () -> Void){
+        self.content = content
+        self.color = color
+        self.actionToDo = actionToDo
+    }
+    
+    var body: some View{
+        Button(action: {
+            actionToDo()
+        }, label: {
+            Text(content)
+        })
+        .padding()
+        .font(.headline)
+        .foregroundColor(.white
+        )
+        .background(color)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+    }
+}
+
+struct score: View{
+    var score: Int
+    
+    init(_ score: Int){
+        self.score = score
+    }
+    
+    var body: some View{
+        HStack{
+            Text("Score")
+                .font(.title3)
+                .fontWeight(.semibold)
+            Spacer()
+            Text("\(score)")
+                .fontWeight(.semibold)
+        }
+    }
+}

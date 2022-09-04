@@ -25,14 +25,14 @@ struct SetGameView: View {
     
     var body: some View {
         TabView(selection: $activeTab){
-            onePlayer(game)
+            onePlayerView(game)
                 .tabItem{
                     Image(systemName: "person.fill")
                     Text("One player")
                 }
                 .tag(1)
 
-            twoPlayer(gameMulti)
+            twoPlayerView(gameMulti)
                 .tabItem{
                     Image(systemName: "person.2.fill")
                     Text("Two players")
@@ -48,22 +48,73 @@ struct SetGameView: View {
         }
     
     }
+
+}
+
+struct onePlayerView: View{
+    var game: SetViewModel
+    let player1: Player.singlePlayer
     
-    @ViewBuilder
-    private func twoPlayer(_ game: SetViewModel) -> some View{
-        let player1 = game.players[0]
-        let player2 = game.players[1]
+    init(_ game: SetViewModel){
+        self.game = game
+        self.player1 = game.players[0]
+    }
+    
+    var body: some View{
+        VStack{
+            Text("Set Game!")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.vertical)
+            
+            score(player1.score)
+            
+            AspectVGrid(items: game.displayedCards, aspectRatio: 2/3, isMiddle: false) { item in
+                CardView(card: item)
+                    .padding(4)
+                    .onTapGesture {
+                        game.choose(item)
+                    }
+            }
+            .foregroundColor(Color.teal)
+            
+            HStack{
+                gameButton("New Game", color: .blue){
+                    game.newGame()
+                }
+                Spacer()
+                gameButton("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
+                    game.hint(by: player1)
+                }
+            }
+        }
+        .padding([.leading, .bottom, .trailing])
+    }
+}
+
+struct twoPlayerView: View{
+    var game: SetViewModel
+    let player1: Player.singlePlayer
+    let player2: Player.singlePlayer
+    
+    init(_ game: SetViewModel){
+        self.game = game
+        self.player1 = game.players[0]
+        self.player2 = game.players[1]
+    }
+    
+    var body: some View{
         VStack{
             HStack{
-                button("Choose", color: game.canSelect ? .blue:.gray){
+                gameButton("Choose", color: game.canSelect ? .blue:.gray){
                     game.playerChoose(by: player1)
                 }
                 Spacer()
-                button("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
+                gameButton("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
                     game.hint(by: player1)
                 }
                 Spacer()
-                button("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
+                gameButton("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
                     game.dealThreeMore(by: player1)
                 }
             }
@@ -84,86 +135,46 @@ struct SetGameView: View {
             score(player2.score)
             
             HStack{
-                button("Choose", color: game.canSelect ? .blue:.gray){
+                gameButton("Choose", color: game.canSelect ? .blue:.gray){
                     game.playerChoose(by: player2)
                 }
                 Spacer()
-                button("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
+                gameButton("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
                     game.hint(by: player2)
                 }
                 Spacer()
-                button("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
+                gameButton("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
                     game.dealThreeMore(by: player2)
                 }
             }
         }
         .padding([.leading, .bottom, .trailing])
     }
-    
-    @ViewBuilder
-    private func onePlayer(_ game: SetViewModel) -> some View{
-        let player1 = game.players[0]
-        
-        VStack{
-            Text("Set Game!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.vertical)
-            
-            score(player1.score)
-            
-            AspectVGrid(items: game.displayedCards, aspectRatio: 2/3, isMiddle: false) { item in
-                CardView(card: item)
-                    .padding(4)
-                    .onTapGesture {
-                        game.choose(item)
-                    }
-            }
-            .foregroundColor(Color.teal)
-            
-            HStack{
-                button("New Game", color: .blue){
-                    game.newGame()
-                }
-                Spacer()
-                button("Hint", color: game.hasCheat ? Color.yellow : Color.gray){
-                    game.hint(by: player1)
-                }
-                Spacer()
-                button("Deal 3 More", color: game.deckCount == 0 ? Color.gray : Color.blue){
-                    game.dealThreeMore(by: player1)
-                }
-            }
-        }
-        .padding([.leading, .bottom, .trailing])
-    }
-    
-    @ViewBuilder
-    private func score(_ score: Int) -> some View{
-        HStack{
-            Text("Score")
-                .font(.title3)
-                .fontWeight(.semibold)
-            Spacer()
-            Text("\(score)")
-                .fontWeight(.semibold)
-        }
-    }
-    
-    @ViewBuilder
-    private func button(_ content: String, color: Color, actionToDo: @escaping () -> Void) -> some View{
-        Button(action: {
-            actionToDo()
-        }, label: {
-            Text(content)
-        })
-        .padding()
-        .font(.headline)
-        .foregroundColor(.white)
-        .background(color)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct SetGameView_Previews: PreviewProvider {
     static var previews: some View {
