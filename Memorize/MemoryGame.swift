@@ -21,24 +21,23 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
         {
-            // Get the time for the the card is clicked
-            let chosenTime = Date()
             
             if let potentialMatched = indexOfOnlyFaceUpCard {
                 // If one cards is faced up and another one is selected
                 if cards[potentialMatched].content == cards[chosenIndex].content {
                     // If 2 cards match
-                    let secondsInterval = Int(chosenTime.timeIntervalSince(cards[potentialMatched].timeChosen)) // number of seconds since last card was chosen
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatched].isMatched = true
-                    score += max(3 - secondsInterval, 1) * 2
+                    score += Int(max(max(cards[potentialMatched].bonusRemaining,
+                                         cards[chosenIndex].bonusRemaining) * 5,
+                                     1)  * 2)
                 } else {
                     // If 2 cards don't match
                     if cards[potentialMatched].isSeem{
-                        score -= 1
+                        score -= 2
                     }
                     if cards[chosenIndex].isSeem{
-                        score -= 1
+                        score -= 2
                     }
                 }
                 cards[chosenIndex].isSeem = true
@@ -46,7 +45,6 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
                 cards[chosenIndex].isFaceUp.toggle()
                 
             } else {
-                cards[chosenIndex].timeChosen = chosenTime
                 indexOfOnlyFaceUpCard = chosenIndex
             }
         }
@@ -70,7 +68,7 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
             cards.append(Card(id: pairIndex * 2, content: content))
             cards.append(Card(id: pairIndex * 2 + 1, content: content))
         }
-//        cards.shuffle()
+        cards.shuffle()
     }
     
     struct Card: Identifiable {
@@ -90,7 +88,6 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
             }
         }
         var isSeem = false
-        var timeChosen: Date = Date()
         let content: CardContent
         
         // MARK: - Bonus Time
@@ -122,10 +119,7 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
         }
         // percentage of the bonus time remaining
         var bonusRemaining: Double {
-            if isMatched && bonusTimeRemaining/bonusTimeLimit == 1{
-                return 0
-            }
-            return (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
+            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
         }
         // whether the card was matched during the bonus time period
         var hasEarnedBonus: Bool {
