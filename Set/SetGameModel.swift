@@ -56,7 +56,7 @@ struct SetGame{
         }
         deck.shuffle()
         displayedCards = Array(deck[0..<12])
-        deck = deck.filter({ !displayedCards.containCard($0.id) })
+//        deck = deck.filter({ !displayedCards.containCard($0.id) })
         getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
     }
     
@@ -164,10 +164,12 @@ struct SetGame{
             }
         }
         
+//        displayedCards = displayedCards.filter({ !inSetCard.containCard($0.id) })
+        var unselectedCard = Array(deck.filter({ !displayedCards.containCard($0.id)})[0..<3])
         if deckCount != 0{
             inSetCard.forEach{ card in
                 if let index = displayedCards.firstIndex(where: {$0.id == card.id}){
-                    displayedCards[index] = deck.removeFirst()
+                    displayedCards[index] = unselectedCard.removeFirst()
                 }
             }
         } else {

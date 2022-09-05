@@ -10,11 +10,11 @@ import SwiftUI
 @main
 struct SetApp: App {
     let game =  SetViewModel(isMultiplayer: false)
-    let gameMulti =  SetViewModel(isMultiplayer: true)
+//    let gameMulti =  SetViewModel(isMultiplayer: true)
     
     var body: some Scene {
         WindowGroup {
-            SetGameView(game: game,gameMulti: gameMulti)
+            onePlayerView(game)
         }
     }
 }

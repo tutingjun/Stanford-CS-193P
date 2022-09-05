@@ -19,6 +19,7 @@
 		FBA541B828C2611200394FEC /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B728C2611100394FEC /* Squiggle.swift */; };
 		FBA541BA28C2684800394FEC /* StripShading.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541B928C2684700394FEC /* StripShading.swift */; };
 		FBA541BC28C2BAB200394FEC /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA541BB28C2BAB200394FEC /* PlayerModel.swift */; };
+		FBEA6AD028C59A3B007C0E2A /* onePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA6ACF28C59A3B007C0E2A /* onePlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		FBA541B728C2611100394FEC /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 		FBA541B928C2684700394FEC /* StripShading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripShading.swift; sourceTree = "<group>"; };
 		FBA541BB28C2BAB200394FEC /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		FBEA6ACF28C59A3B007C0E2A /* onePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onePlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			children = (
 				FBA5419F28C10B6200394FEC /* SetApp.swift */,
 				FBA541A128C10B6200394FEC /* SetGameView.swift */,
+				FBEA6ACF28C59A3B007C0E2A /* onePlayer.swift */,
 				FBA541AD28C10C5600394FEC /* SetGameModel.swift */,
 				FBA541BB28C2BAB200394FEC /* PlayerModel.swift */,
 				FBA541B128C1192300394FEC /* SetViewModel.swift */,
@@ -170,6 +173,7 @@
 				FBA541A228C10B6200394FEC /* SetGameView.swift in Sources */,
 				FBA541A028C10B6200394FEC /* SetApp.swift in Sources */,
 				FBA541B028C115FD00394FEC /* CardView.swift in Sources */,
+				FBEA6AD028C59A3B007C0E2A /* onePlayer.swift in Sources */,
 				FBA541AE28C10C5600394FEC /* SetGameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

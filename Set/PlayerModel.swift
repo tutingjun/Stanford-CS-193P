@@ -29,6 +29,12 @@ struct Player{
         }
     }
     
+    mutating func reset(){
+        for i in players.indices{
+            players[i].score = 0
+        }
+    }
+    
     mutating func addScore(player: singlePlayer, score: Int){
         let index = players.indices.filter({ players[$0].id == player.id }).first!
         players[index].score += score

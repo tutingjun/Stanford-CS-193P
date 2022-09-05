@@ -40,7 +40,7 @@ struct CardView: View {
         let color = content["color"]!
         let shading = content["shading"]!
         let number = content["number"]!
-        let width = width * 2/3
+        let width = max( width * 2/3, 0)
         
         VStack{
             ForEach(0..<numOfPattern(number), id: \.self){_ in

@@ -44,6 +44,7 @@ class SetViewModel: ObservableObject {
         return player.players
     }
     
+    
     // MARK: - Intent
     func choose(_ card: SetGame.card){
         if !canSelect{
@@ -55,7 +56,8 @@ class SetViewModel: ObservableObject {
     
     func newGame(){
         model = SetGame()
-        player = Player(isMultiplayer: isMultiplayer)
+        player.reset()
+        print(player.players)
     }
     
     func hint(by curPlayer: Player.singlePlayer){
@@ -64,15 +66,11 @@ class SetViewModel: ObservableObject {
         }
     }
     
-    func dealThreeMore(by curPlayer: Player.singlePlayer){
-        if deckCount != 0{
-            model.getThreeCards(from: curPlayer, &player)
-        }
-    }
     
     func playerChoose(by curPlayer: Player.singlePlayer){
         if canSelect{
             player.changeIsSelecting(player: curPlayer)
         }
     }
+    
 }
