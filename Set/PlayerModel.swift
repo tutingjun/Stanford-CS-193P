@@ -55,9 +55,5 @@ struct Player{
             isSelecting = false
             score = 0
         }
-        
-        mutating func addScore(_ score: Int){
-            self.score += score
-        }
     }
 }

@@ -14,7 +14,7 @@ struct SetApp: App {
     
     var body: some Scene {
         WindowGroup {
-            onePlayerView(game)
+            onePlayer(game)
         }
     }
 }

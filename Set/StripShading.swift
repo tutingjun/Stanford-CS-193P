@@ -22,9 +22,3 @@ struct StripShading<SymbolShape>: View where SymbolShape:Shape {
         .overlay(shape.stroke(color, lineWidth: 2))
     }
 }
-
-struct StripShading_Previews: PreviewProvider {
-    static var previews: some View {
-        StripShading(shape: Diamond(), color: .blue)
-    }
-}

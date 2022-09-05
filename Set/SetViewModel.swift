@@ -24,8 +24,8 @@ class SetViewModel: ObservableObject {
         return model.displayedCards
     }
     
-    var deck: Array<SetGame.card> {
-        return model.deck
+    var allCards: Array<SetGame.card> {
+        return model.allCards
     }
     
     var deckCount: Int {
@@ -44,6 +44,14 @@ class SetViewModel: ObservableObject {
         return player.players
     }
     
+    var remainingCards: Array<SetGame.card>{
+        return model.remainingCards
+    }
+    
+    var inSetCards: Array<SetGame.card>{
+        return model.inSetCard
+    }
+    
     
     // MARK: - Intent
     func choose(_ card: SetGame.card){
@@ -51,13 +59,14 @@ class SetViewModel: ObservableObject {
             let curPlayer = players.filter({$0.isSelecting == true})[0]
             model.choose(card, by: curPlayer, &player, isMultiplayer: isMultiplayer)
         }
+//        print(displayedCards)
         
     }
     
     func newGame(){
         model = SetGame()
         player.reset()
-        print(player.players)
+//        print(player.players)
     }
     
     func hint(by curPlayer: Player.singlePlayer){
@@ -67,10 +76,18 @@ class SetViewModel: ObservableObject {
     }
     
     
-    func playerChoose(by curPlayer: Player.singlePlayer){
-        if canSelect{
-            player.changeIsSelecting(player: curPlayer)
-        }
+//    func playerChoose(by curPlayer: Player.singlePlayer){
+//        if canSelect{
+//            player.changeIsSelecting(player: curPlayer)
+//        }
+//    }
+    
+    func deal(_ card: SetGame.card){
+        model.deal(card)
+    }
+    
+    func dealThreeCards(by curPlayer: Player.singlePlayer){
+        model.getThreeCards(from: curPlayer, &player)
     }
     
 }

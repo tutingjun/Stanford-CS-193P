@@ -11,14 +11,15 @@ struct SetGame{
     private typealias cardState = SetGame.card.cardState
     
     private(set) var displayedCards: Array<card>
-    private(set) var deck: Array<card>
+    private(set) var allCards: Array<card>
+    private var deck: Array<card>
     private var timeOfFirstSelection: Date
     private var hintSetIndex: Array<Int>
     
     private var selectedCard: Array<card>{
         return displayedCards.filter({ $0.state == .isSelected })
     }
-    private var inSetCard: Array<card>{
+    var inSetCard: Array<card>{
         return displayedCards.filter({ $0.state == .isInSet })
     }
     private var notSetCard: Array<card>{
@@ -26,6 +27,9 @@ struct SetGame{
     }
     private var hintCard: Array<card>{
         return displayedCards.filter({ $0.state == .hint })
+    }
+    private var defaultCard: Array<card>{
+        return deck.filter({ $0.state == .default })
     }
     private var ignoreCardsForHint: Array<card>{
         let index = hintCard.count / 3
@@ -39,6 +43,10 @@ struct SetGame{
             return false
         }
         return true
+    }
+    
+    var remainingCards: Array<card>{
+        return deck.filter({ !displayedCards.containCard($0.id) })
     }
     
     init(){
@@ -55,12 +63,16 @@ struct SetGame{
             }
         }
         deck.shuffle()
+        allCards = Array(deck)
         displayedCards = Array(deck[0..<12])
-//        deck = deck.filter({ !displayedCards.containCard($0.id) })
+        deck = deck.filter({ !displayedCards.containCard($0.id) })
         getHintIndex(hasSetCards: hasSet(displayedCard: displayedCards))
     }
     
     mutating func choose(_ card: card, by player: Player.singlePlayer, _ playerObj: inout Player, isMultiplayer: Bool){
+        if card.state == .isInSet{
+            return
+        }
         if !player.isSelecting{
             return
         }
@@ -121,6 +133,7 @@ struct SetGame{
             return
         }
         playerObj.addScore(player: player, score: -2)
+        print(playerObj.players)
         hintSetIndex = hintSetIndex.filter({displayedCards[$0].state != .hint})
         if selectedCard.count == 0{
             displayedCards[hintSetIndex.removeFirst()].state = .hint
@@ -139,6 +152,9 @@ struct SetGame{
         if inSetCard.count == 3 {
             removeInSetCards()
         } else {
+            if notSetCard.count == 3 {
+                setCardSetState(selectedCard: notSetCard, state: .default)
+            }
             displayedCards += Array(deck[0..<3])
             deck = deck.filter({ !displayedCards.containCard($0.id) })
         }
@@ -147,6 +163,16 @@ struct SetGame{
             playerObj.addScore(player: player, score: -3)
         }
     }
+    
+    mutating func deal(_ card: card){
+        if let index = deck.firstIndex(where: {$0.id == card.id}){
+            deck[index].isDealt = true
+        }
+        if let index = displayedCards.firstIndex(where: {$0.id == card.id}){
+            displayedCards[index].isDealt = true
+        }
+    }
+    
     
     private mutating func getHintIndex(hasSetCards: Array<card>?){
         hintSetIndex = []
@@ -164,12 +190,11 @@ struct SetGame{
             }
         }
         
-//        displayedCards = displayedCards.filter({ !inSetCard.containCard($0.id) })
-        var unselectedCard = Array(deck.filter({ !displayedCards.containCard($0.id)})[0..<3])
+
         if deckCount != 0{
             inSetCard.forEach{ card in
                 if let index = displayedCards.firstIndex(where: {$0.id == card.id}){
-                    displayedCards[index] = unselectedCard.removeFirst()
+                    displayedCards[index] = deck.removeFirst()
                 }
             }
         } else {
@@ -242,15 +267,17 @@ struct SetGame{
 
     }
     
-    struct card: Identifiable{
+    struct card: Identifiable, Hashable{
         var id: UUID
         var state: cardState
         var content: [String: String]
+        var isDealt: Bool
         
         init(color: color, shape: shape, shading: shading, number: number){
             self.id = UUID()
             self.state = .default
             self.content = ["color": color.rawValue, "shape": shape.rawValue, "shading": shading.rawValue, "number": number.rawValue]
+            self.isDealt = false
         }
         
         enum cardState{
@@ -269,7 +296,6 @@ struct SetGame{
         enum number: String, CaseIterable{
             case one, two, three
         }
-        
     }
 }
 
@@ -281,6 +307,24 @@ extension Array where Element == SetGame.card{
             }
         }
         return false
+    }
+    
+    func containAllCards(_ cardId: Array<UUID>) -> Bool{
+        if cardId == []{
+            return false
+        }
+        for card in self{
+            if !cardId.contains(where: {$0 == card.id}){
+                return false
+            }
+        }
+//        for id in cardId{
+//            if !self.containCard(id){
+//                print("\(self); id: \(id)")
+//                return false
+//            }
+//        }
+        return true
     }
     
 }

@@ -10,27 +10,49 @@ import SwiftUI
 
 struct CardView: View {
     let card: SetGame.card
+    let isFaceUp: Bool
+    
+//    var body: some View{
+//        if card.state == .isNotInSet{
+//            cardBody
+//                .rotationEffect(.degrees(3))
+//                .animation(Animation.easeInOut.repeatForever(), value: card.state)
+//        } else if card.state == .isInSet {
+//            cardBody
+//                .offset(x: 0, y: -10)
+//                .animation(Animation.interactiveSpring(), value: card.state)
+//        } else {
+//            cardBody
+//        }
+//    }
+    
     var body: some View {
         GeometryReader{ geometry in
             ZStack(alignment: .center) {
                 let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                shape.fill().foregroundColor(.white)
+                if isFaceUp{
+                    shape.fill().foregroundColor(.teal)
+                } else {
+                    shape.fill().foregroundColor(.white)
 
-                switch card.state{
-                case .isSelected:
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.blue)
-                case.isInSet:
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.green)
-                case .isNotInSet:
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.red)
-                case .hint:
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.yellow)
-                default:
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                    switch card.state{
+                    case .isSelected:
+                        shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.blue)
+                    case.isInSet:
+                        shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.green)
+                    case .isNotInSet:
+                        shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.red)
+                    case .hint:
+                        shape.strokeBorder(lineWidth: DrawingConstants.lineWidth_emphasize).foregroundColor(.yellow)
+                    default:
+                        shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                    }
+
+                    cardStack(content: card.content, width: geometry.size.width)
                 }
-            
-                cardStack(content: card.content, width: geometry.size.width)
             }
+            .rotationEffect(.degrees(card.state == .isNotInSet ? 3 : 0))
+            .animation(Animation.easeInOut, value: card.state)
         }
     }
     
@@ -115,13 +137,12 @@ struct CardView: View {
         static let cornerRadius: CGFloat = 10
         static let lineWidth: CGFloat = 3
         static let lineWidth_emphasize: CGFloat = 5
-        static let opacity: CGFloat = 0.4
     }
 }
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(card: SetGame.card(color: .red, shape: .diamond, shading: .open, number: .one))
+        CardView(card: SetGame.card(color: .red, shape: .diamond, shading: .open, number: .one), isFaceUp: true)
             .aspectRatio(2/3, contentMode: .fit)
     }
 }
