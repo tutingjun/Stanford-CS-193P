@@ -6,34 +6,39 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
 
-extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
-    }
-}
-
-struct EmojiArtDocument: FileDocument {
-    var text: String
-
-    init(text: String = "Hello, world!") {
-        self.text = text
-    }
-
-    static var readableContentTypes: [UTType] { [.exampleText] }
-
-    init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
-        else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-        text = string
+class EmojiArtDocument: ObservableObject {
+    @Published private(set) var emojiArt: EmojiArtModel
+    
+    init(){
+        emojiArt = EmojiArtModel()
+        emojiArt.addEmoji("🏀", at: (-200, -100), size: 80)
+        emojiArt.addEmoji("🐼", at: (50, 100), size: 40)
     }
     
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
-        return .init(regularFileWithContents: data)
+    var emojis: [EmojiArtModel.Emoji]{ emojiArt.emojis }
+    var background: EmojiArtModel.Background{ emojiArt.background }
+    
+    //MARK: - Intents
+    
+    func setBackground(_ background: EmojiArtModel.Background){
+        emojiArt.background = background
+    }
+    
+    func addEmoji(_ emoji: String, at location: (x:Int, y:Int), size: CGFloat){
+        emojiArt.addEmoji(emoji, at: location, size: Int(size))
+    }
+    
+    func moveEmoji(_ emoji: EmojiArtModel.Emoji, by offset: CGSize){
+        if let index = emojiArt.emojis.index(matching: emoji){
+            emojiArt.emojis[index].x += Int(offset.width)
+            emojiArt.emojis[index].y += Int(offset.height)
+        }
+    }
+    
+    func moveEmoji(_ emoji: EmojiArtModel.Emoji, by scale: CGFloat){
+        if let index = emojiArt.emojis.index(matching: emoji){
+            emojiArt.emojis[index].size = Int( (CGFloat(emojiArt.emojis[index].size) * scale).rounded(.toNearestOrAwayFromZero) )
+        }
     }
 }
