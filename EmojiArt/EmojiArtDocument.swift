@@ -8,7 +8,15 @@
 import SwiftUI
 
 class EmojiArtDocument: ObservableObject {
-    @Published private(set) var emojiArt: EmojiArtModel
+    @Published private(set) var emojiArt: EmojiArtModel{
+        didSet{
+            Task{
+                if emojiArt.background != oldValue.background {
+                    await fetchBackgroundImageData()
+                }
+            }
+        }
+    }
     
     init(){
         emojiArt = EmojiArtModel()
@@ -19,6 +27,53 @@ class EmojiArtDocument: ObservableObject {
     var emojis: [EmojiArtModel.Emoji]{ emojiArt.emojis }
     var background: EmojiArtModel.Background{ emojiArt.background }
     
+    @Published var backgroundImage: UIImage? = nil
+    @Published var backgroundImageFetchStatus = BackgroundImageFetchStatus.idle
+    
+    enum BackgroundImageFetchStatus {
+        case idle
+        case fetching
+    }
+    
+    private func fetchBackgroundImageData() async{
+        switch emojiArt.background{
+        case .url(let url):
+            print(url)
+            let data: Data?
+            await MainActor.run {
+                backgroundImageFetchStatus = .fetching
+            }
+            do{
+                (data, _) = try await URLSession.shared.data(from: url)
+            } catch {
+                data = nil
+            }
+            if emojiArt.background == EmojiArtModel.Background.url(url){
+                await MainActor.run {
+                    backgroundImageFetchStatus = .idle
+                    if data != nil{
+                        backgroundImage = UIImage(data: data!)
+                    }
+                }
+            }
+//            DispatchQueue.global(qos: .userInitiated).async {
+//                let imageData = try? Data(contentsOf: url)
+//                DispatchQueue.main.async { [weak self] in
+//                    if self?.emojiArt.background == EmojiArtModel.Background.url(url){
+//                        self?.backgroundImageFetchStatus = .idle
+//                        if imageData != nil{
+//                            self?.backgroundImage = UIImage(data: imageData!)
+//                        }
+//                    }
+//                }
+//            }
+            
+        case .imageData(let data):
+            backgroundImage = UIImage(data: data)
+        case .blank:
+            break
+        }
+    }
     //MARK: - Intents
     
     func setBackground(_ background: EmojiArtModel.Background){
