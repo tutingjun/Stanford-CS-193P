@@ -16,6 +16,7 @@
 		FB530BC728C6991D00A7EC4A /* EmojiArtModel.Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BC628C6991D00A7EC4A /* EmojiArtModel.Background.swift */; };
 		FB530BCA28C69F0100A7EC4A /* UtilityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BC828C69F0100A7EC4A /* UtilityViews.swift */; };
 		FB530BCB28C69F0100A7EC4A /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BC928C69F0100A7EC4A /* UtilityExtensions.swift */; };
+		FB530BCD28C87C3B00A7EC4A /* AnimatableFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BCC28C87C3A00A7EC4A /* AnimatableFontSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		FB530BC628C6991D00A7EC4A /* EmojiArtModel.Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtModel.Background.swift; sourceTree = "<group>"; };
 		FB530BC828C69F0100A7EC4A /* UtilityViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityViews.swift; sourceTree = "<group>"; };
 		FB530BC928C69F0100A7EC4A /* UtilityExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
+		FB530BCC28C87C3A00A7EC4A /* AnimatableFontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableFontSize.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		FB530BB228C6963A00A7EC4A /* EmojiArt */ = {
 			isa = PBXGroup;
 			children = (
+				FB530BCC28C87C3A00A7EC4A /* AnimatableFontSize.swift */,
 				FB530BC428C696DF00A7EC4A /* EmojiArtModel.swift */,
 				FB530BC628C6991D00A7EC4A /* EmojiArtModel.Background.swift */,
 				FB530BB328C6963A00A7EC4A /* EmojiArtApp.swift */,
@@ -157,6 +160,7 @@
 				FB530BB428C6963A00A7EC4A /* EmojiArtApp.swift in Sources */,
 				FB530BB628C6963A00A7EC4A /* EmojiArtDocument.swift in Sources */,
 				FB530BC528C696DF00A7EC4A /* EmojiArtModel.swift in Sources */,
+				FB530BCD28C87C3B00A7EC4A /* AnimatableFontSize.swift in Sources */,
 				FB530BCB28C69F0100A7EC4A /* UtilityExtensions.swift in Sources */,
 				FB530BB828C6963A00A7EC4A /* EmojiArtDocumentView.swift in Sources */,
 				FB530BC728C6991D00A7EC4A /* EmojiArtModel.Background.swift in Sources */,

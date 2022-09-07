@@ -22,6 +22,18 @@ extension Collection where Element: Identifiable {
     }
 }
 
+extension Collection where Element == EmojiArtModel.Emoji {
+    func containEmoji(_ element: Element) -> Bool {
+        for ele in self{
+            if element.id == ele.id{
+                return true
+            }
+        }
+        return false
+        
+    }
+}
+
 // we could do the same thing when it comes to removing an element
 // but we have to add that to a different protocol
 // because Collection works for immutable collections of things
