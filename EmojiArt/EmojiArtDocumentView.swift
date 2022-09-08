@@ -196,7 +196,6 @@ struct EmojiArtDocumentView: View {
     }
     
     private func getEmojiZoomScale(for emoji: EmojiArtModel.Emoji) -> CGFloat{
-        print(selectedEmojis.count == 0 ? zoomScale: selectedEmojis.containEmoji(emoji) ? zoomScaleEmoji : steadyZoomScale)
         return selectedEmojis.count == 0 ? zoomScale: selectedEmojis.containEmoji(emoji) ? zoomScaleEmoji : steadyZoomScale
     }
     
