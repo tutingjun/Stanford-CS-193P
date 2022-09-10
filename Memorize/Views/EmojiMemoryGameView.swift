@@ -11,6 +11,7 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     @Namespace private var dealingNameSpace
     @State private var isNewGame: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom){
             VStack{
@@ -38,7 +39,17 @@ struct EmojiMemoryGameView: View {
             }
             deckBody
         }
+        .onAppear{
+            if game.isDealt{
+                for card in game.cards{
+                    deal(card)
+                }
+            }
+        }
         .padding(.horizontal)
+        .navigationBarTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+//        .navigationBarHidden(true)
     }
     
     @State private var dealt = Set<Int>()
@@ -100,6 +111,7 @@ struct EmojiMemoryGameView: View {
                     deal(card)
                 }
             }
+            game.setIsDealt()
         }
     }
     
@@ -213,7 +225,7 @@ struct CardView: View{
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame()
+        let game = EmojiMemoryGame(theme: Theme(name: "animal", emojis: "", numOfPairs: 0, colorDisplayed: RGBAColor(color: .green), id: 234))
         game.choose(game.cards.first!)
         return EmojiMemoryGameView(game: game)
             .preferredColorScheme(.light)
