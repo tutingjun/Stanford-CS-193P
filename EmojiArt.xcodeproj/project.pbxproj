@@ -18,6 +18,9 @@
 		FB530BCB28C69F0100A7EC4A /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BC928C69F0100A7EC4A /* UtilityExtensions.swift */; };
 		FB530BCD28C87C3B00A7EC4A /* AnimatableFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BCC28C87C3A00A7EC4A /* AnimatableFontSize.swift */; };
 		FB530BCF28C9BC4A00A7EC4A /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BCE28C9BC4900A7EC4A /* PaletteStore.swift */; };
+		FB530BD128CC312A00A7EC4A /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD028CC312900A7EC4A /* PaletteChooser.swift */; };
+		FB530BD328CC379100A7EC4A /* PaletteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD228CC379100A7EC4A /* PaletteEditor.swift */; };
+		FB530BD528CC411300A7EC4A /* PaletteManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD428CC411300A7EC4A /* PaletteManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		FB530BC928C69F0100A7EC4A /* UtilityExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		FB530BCC28C87C3A00A7EC4A /* AnimatableFontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableFontSize.swift; sourceTree = "<group>"; };
 		FB530BCE28C9BC4900A7EC4A /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
+		FB530BD028CC312900A7EC4A /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
+		FB530BD228CC379100A7EC4A /* PaletteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteEditor.swift; sourceTree = "<group>"; };
+		FB530BD428CC411300A7EC4A /* PaletteManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,9 @@
 				FB530BB528C6963A00A7EC4A /* EmojiArtDocument.swift */,
 				FB530BCE28C9BC4900A7EC4A /* PaletteStore.swift */,
 				FB530BB728C6963A00A7EC4A /* EmojiArtDocumentView.swift */,
+				FB530BD028CC312900A7EC4A /* PaletteChooser.swift */,
+				FB530BD228CC379100A7EC4A /* PaletteEditor.swift */,
+				FB530BD428CC411300A7EC4A /* PaletteManger.swift */,
 				FB530BC928C69F0100A7EC4A /* UtilityExtensions.swift */,
 				FB530BC828C69F0100A7EC4A /* UtilityViews.swift */,
 				FB530BB928C6963C00A7EC4A /* Assets.xcassets */,
@@ -163,12 +172,15 @@
 				FB530BB428C6963A00A7EC4A /* EmojiArtApp.swift in Sources */,
 				FB530BB628C6963A00A7EC4A /* EmojiArtDocument.swift in Sources */,
 				FB530BC528C696DF00A7EC4A /* EmojiArtModel.swift in Sources */,
+				FB530BD528CC411300A7EC4A /* PaletteManger.swift in Sources */,
 				FB530BCD28C87C3B00A7EC4A /* AnimatableFontSize.swift in Sources */,
 				FB530BCF28C9BC4A00A7EC4A /* PaletteStore.swift in Sources */,
 				FB530BCB28C69F0100A7EC4A /* UtilityExtensions.swift in Sources */,
+				FB530BD328CC379100A7EC4A /* PaletteEditor.swift in Sources */,
 				FB530BB828C6963A00A7EC4A /* EmojiArtDocumentView.swift in Sources */,
 				FB530BC728C6991D00A7EC4A /* EmojiArtModel.Background.swift in Sources */,
 				FB530BCA28C69F0100A7EC4A /* UtilityViews.swift in Sources */,
+				FB530BD128CC312A00A7EC4A /* PaletteChooser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
