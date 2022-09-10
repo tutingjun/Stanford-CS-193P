@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+import ConfettiSwiftUI
+
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     @Namespace private var dealingNameSpace
     @State private var isNewGame: Bool = false
+    @State private var counter: Int = 0
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -20,7 +23,11 @@ struct EmojiMemoryGameView: View {
                     .fontWeight(.bold)
                     .padding()
                 subHeadline(themeTitle: game.themeTitle, score: game.score)
-                gameBody
+                if game.matchedCardCount == game.cards.count{
+                    winScreen
+                } else {
+                    gameBody
+                }
                 HStack{
                     newGameButton("New Game"){
                         withAnimation{
@@ -37,6 +44,7 @@ struct EmojiMemoryGameView: View {
                     }
                 }
             }
+            .confettiCannon(counter: $counter, num: 50, repetitions: 1, repetitionInterval: 0.7)
             deckBody
         }
         .onAppear{
@@ -50,6 +58,20 @@ struct EmojiMemoryGameView: View {
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
 //        .navigationBarHidden(true)
+    }
+    
+    private var winScreen: some View{
+        VStack{
+            Spacer()
+            Text("You win! 🎉")
+                .font(.largeTitle)
+                .bold()
+                .foregroundColor(.teal)
+            Spacer()
+        }
+        .onAppear{
+            counter += 1
+        }
     }
     
     @State private var dealt = Set<Int>()
@@ -225,8 +247,7 @@ struct CardView: View{
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame(theme: Theme(name: "animal", emojis: "", numOfPairs: 0, colorDisplayed: RGBAColor(color: .green), id: 234))
-        game.choose(game.cards.first!)
+        let game = EmojiMemoryGame(theme: Theme(name: "animal", emojis: "🐵🐼🐙🐔🦅🐢🐷🐟🦐🐳🦒🐝🐊", removedEmojis: "", numOfPairs: 2, colorDisplayed: RGBAColor(color: .green), id: 234))
         return EmojiMemoryGameView(game: game)
             .preferredColorScheme(.light)
     }

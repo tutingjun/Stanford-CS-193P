@@ -10,6 +10,7 @@ import SwiftUI
 struct Theme: Codable, Hashable, Identifiable {
     var name: String
     var emojis: String
+    var removedEmojis: String
     var numOfPairs: Int
     var colorDisplayed: RGBAColor
     var id: Int
@@ -20,6 +21,7 @@ class EmojiThemeStore: ObservableObject {
     @Published var themes = [Theme]() {
         didSet {
             storeInUserDefaults()
+            updateThemeDict()
         }
     }
     private(set) var themeDict = [Int: EmojiMemoryGame]()
@@ -41,7 +43,7 @@ class EmojiThemeStore: ObservableObject {
     
     init(named name: String){
         self.name = name
-//        restoreInUserDefaults()
+        restoreInUserDefaults()
         if themes.isEmpty {
             insertTheme(named: "Vehicles",
                         emojis: "🚌🚇🚋🚁🛳⛵️🛴🚠🚀🛵🛰🚂⛴",
@@ -100,19 +102,10 @@ class EmojiThemeStore: ObservableObject {
             }
         }
 //        print(RGBAColor(color: color))
-        let theme = Theme(name: name, emojis: saveEmoji, numOfPairs: numPairAdded, colorDisplayed: RGBAColor(color: color), id: unique)
+        let theme = Theme(name: name, emojis: saveEmoji, removedEmojis: "", numOfPairs: numPairAdded, colorDisplayed: RGBAColor(color: color), id: unique)
         print(theme)
         let safeIndex = min(max(index, 0), themes.count)
         themes.insert(theme, at: safeIndex)
-    }
-    
-    func emptyTheme() -> Theme{
-        let unique = (themes.max(by: { $0.id < $1.id})? .id ?? 0) + 1
-        return Theme(name: "",
-                     emojis: "",
-                     numOfPairs: 0,
-                     colorDisplayed: RGBAColor(color: .white),
-                     id: unique)
     }
     
     func updateThemeDict(){

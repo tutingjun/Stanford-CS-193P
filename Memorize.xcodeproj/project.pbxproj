@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB34619028CD3D15009D4C8F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = FB34618F28CD3D15009D4C8F /* ConfettiSwiftUI */; };
 		FB530BD728CC633500A7EC4A /* EmojiThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD628CC633500A7EC4A /* EmojiThemeStore.swift */; };
 		FB530BD928CC658D00A7EC4A /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD828CC658D00A7EC4A /* UtilityExtensions.swift */; };
-		FB530BDB28CC75D300A7EC4A /* EmojiThemeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BDA28CC75D200A7EC4A /* EmojiThemeList.swift */; };
+		FB530BDB28CC75D300A7EC4A /* EmojiThemeChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BDA28CC75D200A7EC4A /* EmojiThemeChooser.swift */; };
+		FB530BE028CD0C8400A7EC4A /* EmojiThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BDF28CD0C8400A7EC4A /* EmojiThemeEditor.swift */; };
 		FBA5417C28BD5C4B00394FEC /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5417B28BD5C4B00394FEC /* MemorizeApp.swift */; };
 		FBA5417E28BD5C4B00394FEC /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5417D28BD5C4B00394FEC /* EmojiMemoryGameView.swift */; };
 		FBA5418028BD5C5100394FEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA5417F28BD5C5100394FEC /* Assets.xcassets */; };
@@ -24,7 +26,8 @@
 /* Begin PBXFileReference section */
 		FB530BD628CC633500A7EC4A /* EmojiThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiThemeStore.swift; sourceTree = "<group>"; };
 		FB530BD828CC658D00A7EC4A /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
-		FB530BDA28CC75D200A7EC4A /* EmojiThemeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiThemeList.swift; sourceTree = "<group>"; };
+		FB530BDA28CC75D200A7EC4A /* EmojiThemeChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiThemeChooser.swift; sourceTree = "<group>"; };
+		FB530BDF28CD0C8400A7EC4A /* EmojiThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiThemeEditor.swift; sourceTree = "<group>"; };
 		FBA5417828BD5C4B00394FEC /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA5417B28BD5C4B00394FEC /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		FBA5417D28BD5C4B00394FEC /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB34619028CD3D15009D4C8F /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +55,8 @@
 		FB530BDC28CC7E6000A7EC4A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FB530BDA28CC75D200A7EC4A /* EmojiThemeList.swift */,
+				FB530BDA28CC75D200A7EC4A /* EmojiThemeChooser.swift */,
+				FB530BDF28CD0C8400A7EC4A /* EmojiThemeEditor.swift */,
 				FBA5417D28BD5C4B00394FEC /* EmojiMemoryGameView.swift */,
 				FBA5418F28C06DB500394FEC /* AspectVGrid.swift */,
 				FBA5419128C079A100394FEC /* Pie.swift */,
@@ -131,6 +136,9 @@
 			dependencies = (
 			);
 			name = Memorize;
+			packageProductDependencies = (
+				FB34618F28CD3D15009D4C8F /* ConfettiSwiftUI */,
+			);
 			productName = Memorize;
 			productReference = FBA5417828BD5C4B00394FEC /* Memorize.app */;
 			productType = "com.apple.product-type.application";
@@ -159,6 +167,9 @@
 				Base,
 			);
 			mainGroup = FBA5416F28BD5C4B00394FEC;
+			packageReferences = (
+				FB34618E28CD3D15009D4C8F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = FBA5417928BD5C4B00394FEC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -187,9 +198,10 @@
 			files = (
 				FBA5418A28BEA57900394FEC /* MemoryGame.swift in Sources */,
 				FBA5417E28BD5C4B00394FEC /* EmojiMemoryGameView.swift in Sources */,
+				FB530BE028CD0C8400A7EC4A /* EmojiThemeEditor.swift in Sources */,
 				FBEA6ACE28C3DDAF007C0E2A /* Cardify.swift in Sources */,
 				FBA5419028C06DB600394FEC /* AspectVGrid.swift in Sources */,
-				FB530BDB28CC75D300A7EC4A /* EmojiThemeList.swift in Sources */,
+				FB530BDB28CC75D300A7EC4A /* EmojiThemeChooser.swift in Sources */,
 				FBA5419228C079A100394FEC /* Pie.swift in Sources */,
 				FBA5417C28BD5C4B00394FEC /* MemorizeApp.swift in Sources */,
 				FB530BD728CC633500A7EC4A /* EmojiThemeStore.swift in Sources */,
@@ -399,6 +411,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB34618E28CD3D15009D4C8F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB34618F28CD3D15009D4C8F /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB34618E28CD3D15009D4C8F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBA5417028BD5C4B00394FEC /* Project object */;
 }
