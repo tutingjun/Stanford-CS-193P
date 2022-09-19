@@ -5,7 +5,7 @@
 //  Created by 涂庭鋆 on 2022/9/8.
 //
 
-import SwiftUI
+import Foundation
 
 struct Palette: Identifiable, Codable, Hashable{
     var name: String
@@ -65,8 +65,6 @@ class PaletteStore: ObservableObject {
             insertPalette(named: "Weather", emojis: "☀️🌤⛅️🌥☁️🌦🌧⛈🌩🌨❄️💨☔️💧💦🌊☂️🌫🌪")
             insertPalette(named: "COVID", emojis: "💉🦠😷🤧🤒")
             insertPalette(named: "Faces", emojis: "😀😃😄😁😆😅😂🤣🥲☺️😊😇🙂🙃😉😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🥸🤩🥳😏😞😔😟😕🙁☹️😣😖😫😩🥺😢😭😤😠😡🤯😳🥶😥😓🤗🤔🤭🤫🤥😬🙄😯😧🥱😴🤮😷🤧🤒🤠")
-        } else {
-            print("using saved palette, \(palettes)")
         }
     }
     

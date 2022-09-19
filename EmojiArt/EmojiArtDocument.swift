@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 class EmojiArtDocument: ObservableObject {
     @Published private(set) var emojiArt: EmojiArtModel{
         didSet{
             scheduleAutoSave()
-            Task{
-                if emojiArt.background != oldValue.background {
-                    await fetchBackgroundImageData()
-                }
+            if emojiArt.background != oldValue.background {
+                fetchBackgroundImageData()
             }
+//            Task{
+//                if emojiArt.background != oldValue.background {
+//                    await fetchBackgroundImageData()
+//                }
+//            }
         }
     }
     
@@ -46,7 +50,6 @@ class EmojiArtDocument: ObservableObject {
         let thisfunc = "\(String(describing: self)).\(#function)"
         do {
             let data: Data = try emojiArt.json()
-            print("\(thisfunc) json = \(String(data: data, encoding: .utf8) ?? "nil")")
             try data.write(to: url)
             print("\(thisfunc) success!")
         } catch let encodingError where encodingError is EncodingError {
@@ -60,9 +63,10 @@ class EmojiArtDocument: ObservableObject {
     init(){
         if let url = Autosave.url, let autosavedEmojiArt = try? EmojiArtModel(url: url) {
             emojiArt = autosavedEmojiArt
-            Task{
-                await fetchBackgroundImageData()
-            }
+            fetchBackgroundImageData()
+//            Task{
+//                await fetchBackgroundImageData()
+//            }
         } else {
             emojiArt = EmojiArtModel()
         }
@@ -80,29 +84,45 @@ class EmojiArtDocument: ObservableObject {
         case failed(URL)
     }
     
-    private func fetchBackgroundImageData() async{
+    private var backgroundImageFetchCancellable: AnyCancellable?
+    
+    private func fetchBackgroundImageData(){
         switch emojiArt.background{
         case .url(let url):
-            let data: Data?
-            await MainActor.run {
-                backgroundImageFetchStatus = .fetching
-            }
-            do{
-                (data, _) = try await URLSession.shared.data(from: url)
-            } catch {
-                data = nil
-            }
-            if emojiArt.background == EmojiArtModel.Background.url(url){
-                await MainActor.run {
-                    backgroundImageFetchStatus = .idle
-                    if data != nil{
-                        backgroundImage = UIImage(data: data!)
-                    }
-                    if backgroundImage == nil {
-                        backgroundImageFetchStatus = .failed(url)
-                    }
+//            let data: Data?
+            backgroundImageFetchStatus = .fetching
+            backgroundImageFetchCancellable?.cancel()
+            let session = URLSession.shared
+            let publisher = session.dataTaskPublisher(for: url)
+                .map{ (data, urlResponse) in UIImage(data: data)}
+                .replaceError(with: nil)
+                .receive(on: DispatchQueue.main)
+            
+            backgroundImageFetchCancellable = publisher
+                .sink { [weak self] image in
+                    self?.backgroundImage = image
+                    self?.backgroundImageFetchStatus = image != nil ? .idle : .failed(url)
                 }
-            }
+//            await MainActor.run {
+//                backgroundImageFetchStatus = .fetching
+//            }
+//            do{
+//                (data, _) = try await URLSession.shared.data(from: url)
+//            } catch {
+//                data = nil
+//            }
+//            if emojiArt.background == EmojiArtModel.Background.url(url){
+//                await MainActor.run {
+//                    backgroundImageFetchStatus = .idle
+//                    if data != nil{
+//                        backgroundImage = UIImage(data: data!)
+//                    }
+//                    if backgroundImage == nil {
+//                        backgroundImageFetchStatus = .failed(url)
+//                    }
+//                }
+//            }
+            
 //            DispatchQueue.global(qos: .userInitiated).async {
 //                let imageData = try? Data(contentsOf: url)
 //                DispatchQueue.main.async { [weak self] in
@@ -116,9 +136,10 @@ class EmojiArtDocument: ObservableObject {
 //            }
             
         case .imageData(let data):
-            await MainActor.run {
-                backgroundImage = UIImage(data: data)
-            }
+            backgroundImage = UIImage(data: data)
+//            await MainActor.run {
+//                backgroundImage = UIImage(data: data)
+//            }
         case .blank:
             break
         }

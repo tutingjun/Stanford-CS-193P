@@ -10,6 +10,7 @@ import SwiftUI
 struct PaletteEditor: View {
     @Binding var palette: Palette
     
+    
     var body: some View {
         Form {
             nameSection
