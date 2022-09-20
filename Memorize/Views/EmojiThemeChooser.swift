@@ -49,6 +49,7 @@ struct EmojiThemeChooser: View {
                 print("curThemes: \(store.themes)")
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     @ViewBuilder
