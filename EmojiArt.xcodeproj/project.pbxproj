@@ -21,6 +21,8 @@
 		FB530BD128CC312A00A7EC4A /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD028CC312900A7EC4A /* PaletteChooser.swift */; };
 		FB530BD328CC379100A7EC4A /* PaletteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD228CC379100A7EC4A /* PaletteEditor.swift */; };
 		FB530BD528CC411300A7EC4A /* PaletteManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB530BD428CC411300A7EC4A /* PaletteManger.swift */; };
+		FBFB1DFF28DA2941009E927E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB1DFE28DA2941009E927E /* Camera.swift */; };
+		FBFB1E0128DA2E83009E927E /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB1E0028DA2E83009E927E /* PhotoLibrary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		FB530BD028CC312900A7EC4A /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
 		FB530BD228CC379100A7EC4A /* PaletteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteEditor.swift; sourceTree = "<group>"; };
 		FB530BD428CC411300A7EC4A /* PaletteManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManger.swift; sourceTree = "<group>"; };
+		FBFB1DFE28DA2941009E927E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		FBFB1E0028DA2E83009E927E /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				FB530BB528C6963A00A7EC4A /* EmojiArtDocument.swift */,
 				FB530BCE28C9BC4900A7EC4A /* PaletteStore.swift */,
 				FB530BB728C6963A00A7EC4A /* EmojiArtDocumentView.swift */,
+				FBFB1E0028DA2E83009E927E /* PhotoLibrary.swift */,
+				FBFB1DFE28DA2941009E927E /* Camera.swift */,
 				FB530BD028CC312900A7EC4A /* PaletteChooser.swift */,
 				FB530BD228CC379100A7EC4A /* PaletteEditor.swift */,
 				FB530BD428CC411300A7EC4A /* PaletteManger.swift */,
@@ -173,12 +179,14 @@
 				FB530BB628C6963A00A7EC4A /* EmojiArtDocument.swift in Sources */,
 				FB530BC528C696DF00A7EC4A /* EmojiArtModel.swift in Sources */,
 				FB530BD528CC411300A7EC4A /* PaletteManger.swift in Sources */,
+				FBFB1E0128DA2E83009E927E /* PhotoLibrary.swift in Sources */,
 				FB530BCD28C87C3B00A7EC4A /* AnimatableFontSize.swift in Sources */,
 				FB530BCF28C9BC4A00A7EC4A /* PaletteStore.swift in Sources */,
 				FB530BCB28C69F0100A7EC4A /* UtilityExtensions.swift in Sources */,
 				FB530BD328CC379100A7EC4A /* PaletteEditor.swift in Sources */,
 				FB530BB828C6963A00A7EC4A /* EmojiArtDocumentView.swift in Sources */,
 				FB530BC728C6991D00A7EC4A /* EmojiArtModel.Background.swift in Sources */,
+				FBFB1DFF28DA2941009E927E /* Camera.swift in Sources */,
 				FB530BCA28C69F0100A7EC4A /* UtilityViews.swift in Sources */,
 				FB530BD128CC312A00A7EC4A /* PaletteChooser.swift in Sources */,
 			);
